@@ -1,0 +1,20 @@
+[
+    {
+        "albumId": 1,
+        "tradingCards": [],
+        "finished": true,
+        "category": "FOOTBALL"
+    },
+    {
+        "albumId": 2,
+        "tradingCards": [],
+        "finished": false,
+        "category": "FOOTBALL"
+    },
+    {
+        "albumId": 3,
+        "tradingCards": [],
+        "finished": false,
+        "category": "MOVIES"
+    }
+]
