@@ -1,8 +1,8 @@
 package com.swapapp.swapappmockserver.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.swapapp.swapappmockserver.dto.AlbumCategoryCountDto;
-import com.swapapp.swapappmockserver.dto.AlbumDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.repository.IAlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;

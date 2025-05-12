@@ -2,7 +2,7 @@ package com.swapapp.swapappmockserver.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.swapapp.swapappmockserver.dto.AlbumCategoryCountDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
 import com.swapapp.swapappmockserver.model.Album;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;

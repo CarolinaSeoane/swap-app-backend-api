@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.dto;
+package com.swapapp.swapappmockserver.dto.Album;
 
 import com.swapapp.swapappmockserver.model.AlbumCategory;
 import lombok.AllArgsConstructor;

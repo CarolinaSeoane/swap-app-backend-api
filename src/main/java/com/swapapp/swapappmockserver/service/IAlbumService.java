@@ -1,9 +1,9 @@
 package com.swapapp.swapappmockserver.service;
 
-import com.swapapp.swapappmockserver.dto.AlbumCategoryCountDto;
-import com.swapapp.swapappmockserver.dto.AlbumDto;
-
 import java.util.List;
+
+import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 
 public interface IAlbumService {
     List<AlbumCategoryCountDto> getAlbumCountByCategory();
