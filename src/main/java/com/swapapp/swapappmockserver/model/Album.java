@@ -10,8 +10,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Album {
+    private Integer id;
     private String albumId;
+    private String name;
     private List<TradingCard> tradingCards;
     private Boolean finished;
     private AlbumCategory category;
+    private String cover;
+    private Integer releaseYear;
+    private Integer totalCards;
 }
