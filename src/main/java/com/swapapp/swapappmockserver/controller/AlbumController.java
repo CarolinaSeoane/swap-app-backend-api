@@ -1,7 +1,7 @@
 package com.swapapp.swapappmockserver.controller;
 
-import com.swapapp.swapappmockserver.dto.AlbumCategoryCountDto;
-import com.swapapp.swapappmockserver.dto.AlbumDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
+import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.service.AlbumServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
