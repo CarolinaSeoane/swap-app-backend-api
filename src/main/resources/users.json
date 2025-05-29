@@ -4,7 +4,8 @@
       "email": "pedro@gmail.com",
       "fullName": "Pedro Gómez",
       "username": "pedro",
-      "password": "pedro123"
+      "password": "pedro123",
+      "profileImageUrl": "/images/pedro.jpg"
     }
   ]
   
