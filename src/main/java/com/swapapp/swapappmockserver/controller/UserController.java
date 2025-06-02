@@ -1,6 +1,7 @@
 package com.swapapp.swapappmockserver.controller;
 
 import com.swapapp.swapappmockserver.config.AppProperties;
+import com.swapapp.swapappmockserver.dto.User.ChangePasswordDto;
 import com.swapapp.swapappmockserver.dto.User.LoginResponseDto;
 import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
@@ -31,8 +32,10 @@ public class UserController {
     private AppProperties appProperties;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserRegisterDto dto) {
-        UserDto registered = userService.register(dto);
+    public ResponseEntity<LoginResponseDto> register(@RequestBody UserRegisterDto dto) {
+        System.out.println("Registering user: " + dto.getEmail());
+        System.out.println("Password: " + dto.getPassword());
+        LoginResponseDto registered = userService.register(dto);
         return ResponseEntity.ok(registered);
     }
     
@@ -51,18 +54,26 @@ public class UserController {
         try {
             String token = authHeader.replace("Bearer ", "");
             UserDto user = userService.getCurrentUser(token);
-
-            if (user.getProfileImageUrl() != null && !user.getProfileImageUrl().startsWith("http")) {
-                String baseUrl = appProperties.getBaseUrl();
-                user.setProfileImageUrl(baseUrl + user.getProfileImageUrl());
-
-            }
-
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(null);
         }
     }
+
+    @PutMapping("/me")
+    public ResponseEntity<UserDto> updateCurrentUser(
+        @RequestHeader("Authorization") String authHeader,
+        @RequestBody UserDto updatedUser
+    ) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            UserDto user = userService.updateProfile(token, updatedUser);
+            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
 
     @PostMapping("/upload-profile-image")
     public ResponseEntity<?> uploadProfileImage(
@@ -78,6 +89,31 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    private UserDto addBaseUrlIfNeeded(UserDto user) {
+        if (user.getProfileImageUrl() != null && !user.getProfileImageUrl().startsWith("http")) {
+            String baseUrl = appProperties.getBaseUrl();
+            user.setProfileImageUrl(baseUrl + user.getProfileImageUrl());
+        }
+        return user;
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(
+        @RequestHeader("Authorization") String authHeader,
+        @RequestBody ChangePasswordDto dto
+    ) {
+        System.out.println("Cambio de contraseña: " + dto.getCurrentPassword() + " -> " + dto.getNewPassword());
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            userService.changePassword(token, dto);
+            return ResponseEntity.ok(Map.of("message", "Contraseña actualizada correctamente"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", e.getMessage()));
         }
     }
 

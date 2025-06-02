@@ -1,5 +1,6 @@
 package com.swapapp.swapappmockserver.service;
 
+import com.swapapp.swapappmockserver.dto.User.ChangePasswordDto;
 import com.swapapp.swapappmockserver.dto.User.LoginResponseDto;
 import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -23,31 +25,41 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
     @Autowired
     private JwtUtil jwtUtil;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto register(UserRegisterDto dto) {
+    public LoginResponseDto register(UserRegisterDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("El email ya está registrado.");
         }
 
         User newUser = new User(
-                UUID.randomUUID().toString(),
-                dto.getEmail(),
-                dto.getFullName(),
-                dto.getUsername(),
-                dto.getPassword(),
-                dto.getProfileImageUrl()
+            UUID.randomUUID().toString(),
+            dto.getEmail(),
+            dto.getFullName(),
+            dto.getUsername(),
+            passwordEncoder.encode(dto.getPassword()),
+            dto.getProfileImageUrl()
         );
 
         userRepository.save(newUser);
-        return new UserDto(newUser.getEmail(), newUser.getFullName(), newUser.getUsername(), newUser.getProfileImageUrl());
+
+        String token = jwtUtil.generateToken(newUser.getEmail());
+
+        return new LoginResponseDto(
+            token,
+            newUser.getEmail(),
+            newUser.getFullName(),
+            newUser.getUsername()
+        );
     }
+
 
     @Override
     public LoginResponseDto login(UserLoginDto dto) {
         return userRepository.findByEmail(dto.getEmail())
-                .filter(user -> user.getPassword().equals(dto.getPassword()))
+                .filter(user -> passwordEncoder.matches(dto.getPassword(), user.getPassword()))
                 .map(user -> new LoginResponseDto(
                         jwtUtil.generateToken(user.getEmail()),
                         user.getEmail(),
@@ -65,33 +77,58 @@ public class UserServiceImpl implements IUserService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-        @Override
-        public String saveProfileImage(String token, MultipartFile image) {
-            String email = jwtUtil.extractEmail(token);
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    @Override
+    public String saveProfileImage(String token, MultipartFile image) {
+        String email = jwtUtil.extractEmail(token);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            String filename = UUID.randomUUID() + "-" + image.getOriginalFilename();
-            String uploadDir = "uploads/profile-images";
+        String filename = UUID.randomUUID() + "-" + image.getOriginalFilename();
+        String uploadDir = "uploads/profile-images";
 
-            File uploadPath = new File(uploadDir);
-            if (!uploadPath.exists()) {
-                uploadPath.mkdirs();
-            }
-
-            File dest = new File(uploadPath, filename);
-        try {
-                image.transferTo(dest);
-            } catch (IOException | IllegalStateException e) {
-                throw new RuntimeException("Error al guardar la imagen de perfil", e);
-            }
-
-
-            String imageUrl = "/" + filename;
-            user.setProfileImageUrl(imageUrl);
-            userRepository.save(user);
-
-            return imageUrl;
+        File uploadPath = new File(uploadDir);
+        if (!uploadPath.exists()) {
+            uploadPath.mkdirs();
         }
+
+        File dest = new File(uploadPath, filename);
+    try {
+            image.transferTo(dest);
+        } catch (IOException | IllegalStateException e) {
+            throw new RuntimeException("Error al guardar la imagen de perfil", e);
+        }
+
+        String imageUrl = "/images/" + filename;
+        user.setProfileImageUrl(imageUrl);
+        userRepository.save(user);
+
+        return imageUrl;
+    }
+
+    @Override
+    public UserDto updateProfile(String token, UserDto dto) {
+        String email = jwtUtil.extractEmail(token);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        user.setFullName(dto.getFullName());
+        user.setUsername(dto.getUsername());
+        userRepository.save(user);
+
+        return new UserDto(user.getEmail(), user.getFullName(), user.getUsername(), user.getProfileImageUrl());
+    }
+
+    public void changePassword(String token, ChangePasswordDto dto) {
+        String email = jwtUtil.extractUsername(token);
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("La contraseña actual es incorrecta");
+        }
+
+        user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        userRepository.save(user);
+    }
 
 }

@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "albumId": "Qatar 2022",
+        "name": "Fifa World Cup Qatar 2022",
+        "tradingCards": [],
+        "finished": false,
+        "category": "FOOTBALL",
+        "cover": "qatar",
+        "releaseYear": 2022,
+        "totalCards": 670
+    },
+    {
+        "id": 2,
+        "albumId": "South Africa 2010",
+        "name": "Fifa World Cup South Africa 2010",
+        "tradingCards": [],
+        "finished": false,
+        "category": "FOOTBALL",
+        "cover": "south_africa",
+        "releaseYear": 2010,
+        "totalCards": 638
+    },
+    {
+        "id": 3,
+        "albumId": "Ice Age",
+        "name": "La Era de Hielo: Choque de Mundos",
+        "tradingCards": [],
+        "finished": false,
+        "category": "MOVIES",
+        "cover": "ice_age",
+        "releaseYear": 2022,
+        "totalCards": 332
+    },
+    {
+        "id": 4,
+        "albumId": "Sonic",
+        "name": "Sonic Prime",
+        "tradingCards": [],
+        "finished": false,
+        "category": "VIDEOGAMES",
+        "cover": "sonic",
+        "releaseYear": 2024,
+        "totalCards": 230
+    }
+]
