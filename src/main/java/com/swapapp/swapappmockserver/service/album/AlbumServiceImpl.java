@@ -2,13 +2,13 @@ package com.swapapp.swapappmockserver.service.album;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
-import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +33,26 @@ public class AlbumServiceImpl implements IAlbumService {
                 .map(entry ->
                         new AlbumCategoryCountDto(entry.getKey(), entry.getValue().intValue()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Album> getAlbumsCategory(String category) {
+        List<Album> albums = albumRepository.getAlbums();
+        if (albums.isEmpty()){
+            return new ArrayList<>();
+        }
+
+        return albums.stream().filter(album -> category.equals(album.getCategory().toString())).collect(Collectors.toList());
+    }
+
+    @Override
+    public Album getAlbum(String albumId) {
+        List<Album> albums = albumRepository.getAlbums();
+        if (albums.isEmpty()){
+            //
+        }
+
+        return albums.stream().filter(album -> albumId.equals(album.getAlbumId())).toList().getFirst();
     }
 
 }
