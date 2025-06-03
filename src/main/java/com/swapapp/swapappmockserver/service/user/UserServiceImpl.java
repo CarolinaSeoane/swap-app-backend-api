@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.service;
+package com.swapapp.swapappmockserver.service.user;
 
 import com.swapapp.swapappmockserver.dto.User.ChangePasswordDto;
 import com.swapapp.swapappmockserver.dto.User.LoginResponseDto;
@@ -6,17 +6,18 @@ import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
 import com.swapapp.swapappmockserver.dto.User.UserRegisterDto;
 import com.swapapp.swapappmockserver.model.User;
-import com.swapapp.swapappmockserver.repository.IUserRepository;
+import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 import com.swapapp.swapappmockserver.security.JwtUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import com.swapapp.swapappmockserver.exceptions.EmailNotFoundException;
+import com.swapapp.swapappmockserver.exceptions.IncorrectPasswordException;
 import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -58,16 +59,25 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public LoginResponseDto login(UserLoginDto dto) {
-        return userRepository.findByEmail(dto.getEmail())
-                .filter(user -> passwordEncoder.matches(dto.getPassword(), user.getPassword()))
-                .map(user -> new LoginResponseDto(
-                        jwtUtil.generateToken(user.getEmail()),
-                        user.getEmail(),
-                        user.getFullName(),
-                        user.getUsername()
-                ))
-                .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
+        Optional<User> optionalUser = userRepository.findByEmail(dto.getEmail());
+
+        if (optionalUser.isEmpty()) {
+            throw new EmailNotFoundException("El email no está registrado");
+        }
+
+        User user = optionalUser.get();
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+            throw new IncorrectPasswordException("Contraseña incorrecta");
+        }
+
+        return new LoginResponseDto(
+                jwtUtil.generateToken(user.getEmail()),
+                user.getEmail(),
+                user.getFullName(),
+                user.getUsername()
+        );
     }
+
 
     @Override
     public UserDto getCurrentUser(String token) {

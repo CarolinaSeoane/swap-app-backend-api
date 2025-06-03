@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.repository;
+package com.swapapp.swapappmockserver.repository.album;
 
 import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
 import com.swapapp.swapappmockserver.model.Album;

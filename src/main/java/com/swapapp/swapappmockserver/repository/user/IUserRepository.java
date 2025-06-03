@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.repository;
+package com.swapapp.swapappmockserver.repository.user;
 
 import com.swapapp.swapappmockserver.model.User;
 

@@ -1,7 +1,8 @@
 package com.swapapp.swapappmockserver.security;
 
 import com.swapapp.swapappmockserver.model.User;
-import com.swapapp.swapappmockserver.repository.IUserRepository;
+import com.swapapp.swapappmockserver.repository.user.IUserRepository;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,6 +30,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+        
+        System.out.println("✅ JwtAuthenticationFilter activado para: " + request.getRequestURI());
+
 
         String authHeader = request.getHeader("Authorization");
 
@@ -43,6 +47,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
+            System.out.println("Authorization: " + authHeader);
+            System.out.println("Email extraído del token: " + email);
+            System.out.println("Usuario en BD: " + user);
+            System.out.println("Token válido: " + jwtUtil.validateToken(token));
+
         }
 
         filterChain.doFilter(request, response);

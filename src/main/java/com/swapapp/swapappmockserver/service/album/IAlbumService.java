@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.service;
+package com.swapapp.swapappmockserver.service.album;
 
 import java.util.List;
 

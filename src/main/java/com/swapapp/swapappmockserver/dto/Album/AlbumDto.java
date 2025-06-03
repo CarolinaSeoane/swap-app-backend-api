@@ -1,7 +1,8 @@
 package com.swapapp.swapappmockserver.dto.Album;
 
 import com.swapapp.swapappmockserver.model.AlbumCategory;
-import com.swapapp.swapappmockserver.model.TradingCard;
+import com.swapapp.swapappmockserver.model.trades.TradingCard;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

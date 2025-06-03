@@ -6,10 +6,10 @@ import com.swapapp.swapappmockserver.dto.User.LoginResponseDto;
 import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
 import com.swapapp.swapappmockserver.dto.User.UserRegisterDto;
-import com.swapapp.swapappmockserver.repository.IUserRepository;
 import com.swapapp.swapappmockserver.security.JwtUtil;
-import com.swapapp.swapappmockserver.service.UserServiceImpl;
+import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.swapapp.swapappmockserver.exceptions.EmailNotFoundException;
+import com.swapapp.swapappmockserver.exceptions.IncorrectPasswordException;
+import com.swapapp.swapappmockserver.repository.user.IUserRepository;
+
 
 @RestController
 @RequestMapping("/users")
@@ -40,17 +44,24 @@ public class UserController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody UserLoginDto dto) {
+    public ResponseEntity<Object> login(@RequestBody UserLoginDto dto) {
         try {
             LoginResponseDto response = userService.login(dto);
             return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(null);
+        } catch (EmailNotFoundException e) {
+            return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
+        } catch (IncorrectPasswordException e) {
+            return ResponseEntity.status(401).body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(Map.of("message", "Error inesperado"));
         }
     }
 
+
+
     @GetMapping("/me")
     public ResponseEntity<UserDto> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+        System.out.println("getCurrentUser authHeader: " + authHeader);
         try {
             String token = authHeader.replace("Bearer ", "");
             UserDto user = userService.getCurrentUser(token);

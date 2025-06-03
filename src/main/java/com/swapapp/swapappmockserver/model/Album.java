@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import com.swapapp.swapappmockserver.model.trades.TradingCard;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

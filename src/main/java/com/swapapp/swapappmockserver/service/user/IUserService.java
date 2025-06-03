@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.service;
+package com.swapapp.swapappmockserver.service.user;
 
 import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;

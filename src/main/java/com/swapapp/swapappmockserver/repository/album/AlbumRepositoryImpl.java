@@ -1,4 +1,4 @@
-package com.swapapp.swapappmockserver.repository;
+package com.swapapp.swapappmockserver.repository.album;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
