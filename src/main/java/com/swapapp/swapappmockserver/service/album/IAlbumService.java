@@ -9,5 +9,5 @@ public interface IAlbumService {
     List<AlbumCategoryCountDto> getAlbumCountByCategory();
     List<Album> getAlbumsCategory(String category);
     Album getAlbum(String albumId);
-
+    List<Album> getAlbums();
 }

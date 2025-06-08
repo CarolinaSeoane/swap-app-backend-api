@@ -55,4 +55,9 @@ public class AlbumServiceImpl implements IAlbumService {
         return albums.stream().filter(album -> albumId.equals(album.getAlbumId())).toList().getFirst();
     }
 
+    @Override
+    public List<Album> getAlbums() {
+        return albumRepository.getAlbums();
+    }
+
 }

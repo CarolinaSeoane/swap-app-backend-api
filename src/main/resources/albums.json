@@ -41,18 +41,23 @@
         "category": "FOOTBALL",
         "cover": "qatar",
         "releaseYear": 2022,
-        "totalCards": 670
+        "totalCards": 10
     },
     {
         "id": 2,
         "albumId": "South Africa 2010",
         "name": "Fifa World Cup South Africa 2010",
-        "tradingCards": [],
+        "tradingCards": [{
+            "number": 1,
+            "albumId": "Qatar 2022",
+            "obtained": false,
+            "repeatedQuantity": 0
+        }],
         "finished": false,
         "category": "FOOTBALL",
         "cover": "south_africa",
         "releaseYear": 2010,
-        "totalCards": 638
+        "totalCards": 11
     },
     {
         "id": 3,

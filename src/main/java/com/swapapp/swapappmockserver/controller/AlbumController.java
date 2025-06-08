@@ -37,10 +37,16 @@ public class AlbumController {
         return new ResponseEntity<>(albumServiceImpl.getAlbumsCategory(categoryId), HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping("/{albumId}")
     public ResponseEntity<Album> getAlbum(@RequestParam("albumId") String albumId) {
         logger.info("/albums by id " + albumId);
         return new ResponseEntity<>(albumServiceImpl.getAlbum(albumId), HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Album>> getAlbums() {
+        logger.info("/albums");
+        return new ResponseEntity<>(albumServiceImpl.getAlbums(), HttpStatus.OK);
     }
 
 }
