@@ -1,5 +1,6 @@
 package com.swapapp.swapappmockserver.model.trades;
 
+import com.swapapp.swapappmockserver.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

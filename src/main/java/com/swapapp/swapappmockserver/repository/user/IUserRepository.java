@@ -9,4 +9,5 @@ public interface IUserRepository {
     List<User> getAll();
     Optional<User> findByEmail(String email);
     void save(User user);
+    Optional<User> findById(String id);
 }

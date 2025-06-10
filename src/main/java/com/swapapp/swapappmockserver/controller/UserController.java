@@ -6,10 +6,12 @@ import com.swapapp.swapappmockserver.dto.User.LoginResponseDto;
 import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
 import com.swapapp.swapappmockserver.dto.User.UserRegisterDto;
+import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.security.JwtUtil;
 import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,8 @@ public class UserController {
     public ResponseEntity<Object> login(@RequestBody UserLoginDto dto) {
         try {
             LoginResponseDto response = userService.login(dto);
+            System.out.println("response login");
+            System.out.println(response);
             return ResponseEntity.ok(response);
         } catch (EmailNotFoundException e) {
             return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
@@ -56,8 +60,6 @@ public class UserController {
             return ResponseEntity.status(500).body(Map.of("message", "Error inesperado"));
         }
     }
-
-
 
     @GetMapping("/me")
     public ResponseEntity<UserDto> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
@@ -84,7 +86,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-
 
     @PostMapping("/upload-profile-image")
     public ResponseEntity<?> uploadProfileImage(
@@ -125,6 +126,19 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/possible-trades")
+    public ResponseEntity<?> possibleTrades(
+        @RequestHeader("Authorization") String authHeader
+    ) {
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            List<PossibleTrade> trades = userService.getPossibleTrades(token);
+            return ResponseEntity.ok(trades);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(null);
         }
     }
 

@@ -1,12 +1,10 @@
-// solo guardamos informacion de las figuritas que tiene casa usuario
-
 [
   {
     "id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc",
     "email":"marcos@gmail.com",
     "fullName":"Marcos Gomez",
     "username":"marcosgome",
-    "password":"$2a$10$4pKzWeEYYcyYRK3WF2gsHu7/ybMHFtdjEuY0U9ZvygaCCBXmTDew2", // marcos12345
+    "password":"$2a$10$4pKzWeEYYcyYRK3WF2gsHu7/ybMHFtdjEuY0U9ZvygaCCBXmTDew2",
     "profileImageUrl":"/images/marcos.jpg",
     "albums": [
       {
@@ -79,7 +77,7 @@
     "email":"pedro@gmail.com",
     "fullName":"pedro",
     "username":"pedro",
-    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u", // pedroo123
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
     "profileImageUrl":null
   },
   {
@@ -87,7 +85,7 @@
     "email":"matias@gmail.com",
     "fullName":"matias",
     "username":"matias",
-    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u", // pedroo123
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
     "profileImageUrl":"/images/matias.jpg",
     "albums": [
       {
@@ -152,7 +150,7 @@
     "email":"valeria@gmail.com",
     "fullName":"valeria",
     "username":"valeria",
-    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u", // pedroo123
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
     "profileImageUrl":null
   }
 ]

@@ -56,6 +56,11 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
+    public Optional<User> findById(String id) {
+        return users.stream().filter(u -> u.getId().equals(id)).findFirst();
+    }
+
+    @Override
     public void save(User user) {
         Optional<User> existing = findByEmail(user.getEmail());
         if (existing.isPresent()) {

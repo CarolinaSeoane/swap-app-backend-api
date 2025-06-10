@@ -6,16 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private String email;
-    private String fullName;
-    private String username;
-    private String profileImageUrl;
-    private List<UserAlbumDto> albums;
-    private List<String> friends;
+public class UserAlbumDto {
+    private Integer id;
+    private List<StickerTrade> stickers;
 }
