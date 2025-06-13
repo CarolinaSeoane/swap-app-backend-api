@@ -131,10 +131,12 @@ public class UserController {
 
     @GetMapping("/possible-trades")
     public ResponseEntity<?> possibleTrades(
-        @RequestHeader("Authorization") String authHeader
+            @RequestHeader("Authorization") String authHeader
     ) {
         try {
             String token = authHeader.replace("Bearer ", "");
+            System.out.println("token in get possible trades");
+            System.out.println(token);
             List<PossibleTrade> trades = userService.getPossibleTrades(token);
             return ResponseEntity.ok(trades);
         } catch (RuntimeException e) {

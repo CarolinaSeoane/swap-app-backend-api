@@ -1,11 +1,14 @@
 package com.swapapp.swapappmockserver.service.user;
 
+import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.dto.User.*;
+import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
 import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.StickerTrade;
 import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 import com.swapapp.swapappmockserver.security.JwtUtil;
+import com.swapapp.swapappmockserver.service.album.AlbumServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -146,6 +149,8 @@ public class UserServiceImpl implements IUserService {
 
             if (!toTrade.isEmpty()) {
                 PossibleTrade trade = new PossibleTrade();
+//                AlbumServiceImpl albumServiceImpl = new AlbumServiceImpl();
+//                Album album = albumServiceImpl.getAlbum(String.valueOf(albumId));
                 trade.setAlbum(albumId);
                 trade.setStickers(toTrade);
                 trade.setFrom(friend);
