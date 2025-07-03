@@ -12,31 +12,38 @@
         "stickers": [
           {
             "number": 1,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 2,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 3,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": true
           },
           {
             "number": 5,
-            "repeatCount": 4
+            "repeatCount": 4,
+            "obtained": true
           },
           {
             "number": 6,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 9,
-            "repeatCount": 6
+            "repeatCount": 6,
+            "obtained": true
           },
           {
             "number": 10,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": false
           }
         ]
       },
@@ -45,27 +52,33 @@
         "stickers": [
           {
             "number": 2,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 5,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 6,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": false
           },
           {
             "number": 7,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 9,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 10,
-            "repeatCount": 3
+            "repeatCount": 3,
+            "obtained": true
           }
         ]
       }
@@ -93,23 +106,28 @@
         "stickers": [
           {
             "number": 2,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 4,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 5,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 8,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 10,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": false
           }
         ]
       },
@@ -118,27 +136,33 @@
         "stickers": [
           {
             "number": 1,
-            "repeatCount": 2
+            "repeatCount": 2,
+            "obtained": true
           },
           {
             "number": 4,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": true
           },
           {
             "number": 5,
-            "repeatCount": 3
+            "repeatCount": 3,
+            "obtained": true
           },
           {
             "number": 7,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 8,
-            "repeatCount": 1
+            "repeatCount": 1,
+            "obtained": true
           },
           {
             "number": 9,
-            "repeatCount": 0
+            "repeatCount": 0,
+            "obtained": false
           }
         ]
       }

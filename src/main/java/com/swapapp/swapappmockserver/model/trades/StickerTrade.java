@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class StickerTrade {
     private Integer number;
     private Integer repeatCount;
+    private Boolean obtained;
 }

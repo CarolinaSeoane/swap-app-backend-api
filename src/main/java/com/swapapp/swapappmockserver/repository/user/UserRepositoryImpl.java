@@ -2,6 +2,8 @@ package com.swapapp.swapappmockserver.repository.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
+import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
@@ -10,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -68,6 +71,12 @@ public class UserRepositoryImpl implements IUserRepository {
         }
         users.add(user);
         persistUsers(); // Guardar en el archivo
+    }
+
+    @Override
+    public List<UserAlbumDto> getUserAlbums(String email) {
+        Optional<User> user = users.stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst();
+        return user.isPresent() ? user.get().getAlbums() : new ArrayList<>();
     }
 
 }

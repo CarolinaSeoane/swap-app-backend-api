@@ -37,7 +37,7 @@ public class AlbumController {
         return new ResponseEntity<>(albumServiceImpl.getAlbumsCategory(categoryId), HttpStatus.OK);
     }
 
-    @GetMapping("/{albumId}")
+    @GetMapping("/v1/{albumId}")
     public ResponseEntity<Album> getAlbum(@RequestParam("albumId") String albumId) {
         logger.info("/albums by id " + albumId);
         return new ResponseEntity<>(albumServiceImpl.getAlbum(albumId), HttpStatus.OK);
@@ -49,4 +49,21 @@ public class AlbumController {
         return new ResponseEntity<>(albumServiceImpl.getAlbums(), HttpStatus.OK);
     }
 
+    @GetMapping("/v2/{email}")
+    public ResponseEntity<List<Album>> getUserAlbums(@RequestParam("email") String email) {
+        logger.info("/albums");
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbums(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/{albumId}/{email}")
+    public ResponseEntity<Album> getUserAlbum(@RequestParam("albumId") String albumId, @RequestParam("email") String email) {
+        logger.info("/albums by id " + albumId);
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbum(albumId, email), HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{email}")
+    public ResponseEntity<List<Album>> getUserAlbumsCategory(@RequestParam("categoryId") String categoryId, @RequestParam("email") String email) {
+        logger.info("/albums categroy " + categoryId);
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbumsCategory(categoryId, email), HttpStatus.OK);
+    }
 }
