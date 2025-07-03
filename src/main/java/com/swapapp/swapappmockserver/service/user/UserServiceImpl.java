@@ -6,6 +6,7 @@ import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
 import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.StickerTrade;
+import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
 import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 import com.swapapp.swapappmockserver.security.JwtUtil;
 import com.swapapp.swapappmockserver.service.album.AlbumServiceImpl;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private AlbumServiceImpl albumService;
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
@@ -149,9 +152,9 @@ public class UserServiceImpl implements IUserService {
 
             if (!toTrade.isEmpty()) {
                 PossibleTrade trade = new PossibleTrade();
-//                AlbumServiceImpl albumServiceImpl = new AlbumServiceImpl();
-//                Album album = albumServiceImpl.getAlbum(String.valueOf(albumId));
+                Album album = albumService.getAlbum(String.valueOf(albumId));
                 trade.setAlbum(albumId);
+                trade.setAlbumName(album.getName());
                 trade.setStickers(toTrade);
                 trade.setFrom(friend);
 

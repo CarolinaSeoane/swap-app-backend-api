@@ -135,12 +135,11 @@ public class UserController {
     ) {
         try {
             String token = authHeader.replace("Bearer ", "");
-            System.out.println("token in get possible trades");
-            System.out.println(token);
             List<PossibleTrade> trades = userService.getPossibleTrades(token);
             return ResponseEntity.ok(trades);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body(null);
+            System.out.println("Error getting possible trades: " + e);
+            return ResponseEntity.status(500).body(null);
         }
     }
 

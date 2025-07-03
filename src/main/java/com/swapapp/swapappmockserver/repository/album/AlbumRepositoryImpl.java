@@ -31,7 +31,6 @@ public class AlbumRepositoryImpl implements IAlbumRepository {
 
         file= ResourceUtils.getFile("classpath:albums.json");
         albums = objectMapper.readValue(file,new TypeReference<List<Album>>(){});
-
         listOfAlbums = albums;
     }
 

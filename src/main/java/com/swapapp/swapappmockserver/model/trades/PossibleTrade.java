@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PossibleTrade {
     private Integer album;
+    private String albumName;
     private UserDto from;
     private List<Integer> stickers;
 }
