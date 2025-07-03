@@ -16,6 +16,9 @@ public class UserRegisterDto {
     private String username;
     private String password;
     private String profileImageUrl;
+    private String location;
+    private Boolean shipping;
+    private String reputation;
     private List<UserAlbumDto> albums;
     private List<String> friends;
 }

@@ -46,6 +46,9 @@ public class UserServiceImpl implements IUserService {
             dto.getUsername(),
             passwordEncoder.encode(dto.getPassword()),
             dto.getProfileImageUrl(),
+            dto.getLocation(),
+            dto.getShipping(),
+            dto.getReputation(),
             dto.getAlbums(),
             dto.getFriends()
         );
@@ -96,6 +99,9 @@ public class UserServiceImpl implements IUserService {
                         user.getFullName(),
                         user.getUsername(),
                         user.getProfileImageUrl(),
+                        user.getLocation(),
+                        user.getShipping(),
+                        user.getReputation(),
                         user.getAlbums(),
                         user.getFriends()
                 ))
@@ -110,6 +116,9 @@ public class UserServiceImpl implements IUserService {
                         user.getFullName(),
                         user.getUsername(),
                         user.getProfileImageUrl(),
+                        user.getLocation(),
+                        user.getShipping(),
+                        user.getReputation(),
                         user.getAlbums(),
                         user.getFriends()
                 ))
@@ -222,6 +231,9 @@ public class UserServiceImpl implements IUserService {
                 user.getFullName(),
                 user.getUsername(),
                 user.getProfileImageUrl(),
+                user.getLocation(),
+                user.getShipping(),
+                user.getReputation(),
                 user.getAlbums(),
                 user.getFriends()
         );

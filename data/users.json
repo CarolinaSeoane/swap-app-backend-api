@@ -3,9 +3,12 @@
     "id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc",
     "email":"marcos@gmail.com",
     "fullName":"Marcos Gomez",
-    "username":"marcosgome",
+    "username":"marcos",
     "password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS",
     "profileImageUrl":"/images/marcos.jpg",
+    "location": "Caballito, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
     "albums": [
       {
         "id": 1,
@@ -91,6 +94,9 @@
     "fullName":"pedro",
     "username":"pedro",
     "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "location": "Devoto, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "bad",
     "profileImageUrl":null
   },
   {
@@ -100,6 +106,9 @@
     "username":"matias",
     "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
     "profileImageUrl":"/images/matias.jpg",
+    "location": "Nuñez, Ciudad de Buenos Aires",
+    "shipping": false,
+    "reputation": "bad",
     "albums": [
       {
         "id": 1,
@@ -176,6 +185,9 @@
     "username":"valeria",
     "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
     "profileImageUrl":null,
+    "location": "Belgrano, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
     "albums": [
       {
         "id": 1,
