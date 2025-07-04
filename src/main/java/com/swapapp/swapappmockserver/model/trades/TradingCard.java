@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class TradingCard {
     private Integer number;
     private String albumId;
-    private Boolean obtained;
+    private Boolean obtained = false;
     private Integer repeatedQuantity;
 }

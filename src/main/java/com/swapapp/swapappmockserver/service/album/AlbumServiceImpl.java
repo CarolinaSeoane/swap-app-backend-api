@@ -7,13 +7,13 @@ import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.trades.StickerTrade;
 import com.swapapp.swapappmockserver.model.trades.TradingCard;
 import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
-
 import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -43,29 +43,13 @@ public class AlbumServiceImpl implements IAlbumService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Album> getAlbumsCategory(String category) {
-        List<Album> albums = albumRepository.getAlbums();
-        if (albums.isEmpty()){
-            return new ArrayList<>();
-        }
-
-        return albums.stream().filter(album -> category.equals(album.getCategory().toString())).collect(Collectors.toList());
-    }
-
-    @Override
-    public Album getAlbum(String albumId) {
+    private Album getAlbum(String albumId) {
         List<Album> albums = albumRepository.getAlbums();
         if (albums.isEmpty()){
             //
         }
 
         return albums.stream().filter(album -> albumId.equals(album.getId().toString())).toList().getFirst();
-    }
-
-    @Override
-    public List<Album> getAlbums() {
-        return albumRepository.getAlbums();
     }
 
     @Override
@@ -77,7 +61,7 @@ public class AlbumServiceImpl implements IAlbumService {
     private Album mapToAlbum(UserAlbumDto userAlbumDto) {
         Album fullAlbum = getAlbum(userAlbumDto.getId().toString());
 
-        List<TradingCard> tradingCards = userAlbumDto.getStickers().stream().map(stickerTrade -> mapToTradingCard(stickerTrade, fullAlbum.getAlbumId())).toList();
+        List<TradingCard> tradingCards = fullAlbum.getTradingCards().stream().map(tradingCard -> mapToTradingCard(tradingCard, userAlbumDto.getStickers(), fullAlbum.getAlbumId())).toList();
 
         Album album = new Album();
         album.setCategory(fullAlbum.getCategory());
@@ -93,12 +77,14 @@ public class AlbumServiceImpl implements IAlbumService {
         return album;
     }
 
-    private TradingCard mapToTradingCard(StickerTrade sticker, String albumId){
+    private TradingCard mapToTradingCard(TradingCard tradingCardAlbum, List<StickerTrade> listOfStickers, String albumId){
+        Optional<StickerTrade> sticker = listOfStickers.stream().filter(stickerTrade -> tradingCardAlbum.getNumber().equals(stickerTrade.getNumber())).findFirst();
+
         TradingCard tradingCard = new TradingCard();
         tradingCard.setAlbumId(albumId);
-        tradingCard.setObtained(sticker.getObtained());
-        tradingCard.setNumber(sticker.getNumber());
-        tradingCard.setRepeatedQuantity(sticker.getRepeatCount());
+        tradingCard.setNumber(tradingCardAlbum.getNumber());
+        tradingCard.setObtained(sticker.isPresent());
+        tradingCard.setRepeatedQuantity(sticker.isPresent()? sticker.get().getRepeatCount(): 0);
 
         return tradingCard;
     }
@@ -121,5 +107,20 @@ public class AlbumServiceImpl implements IAlbumService {
         }
 
         return albums.stream().filter(album -> category.equals(album.getCategory().toString())).toList();
+    }
+
+    @Override
+    public Album updateUserCards(String albumId, List<TradingCard> tradingCards, String email) {
+        Album album = getUserAlbum(albumId.toString(), email);
+
+        for(TradingCard tradingCard : tradingCards){
+            album.getTradingCards().forEach(tradingCard1 -> {
+                if (tradingCard1.getNumber().equals(tradingCard.getNumber())){
+                    tradingCard1.setRepeatedQuantity(tradingCard.getRepeatedQuantity());
+                }
+            });
+        }
+        usuarioRepository.saveCards(album,email);
+        return album;
     }
 }

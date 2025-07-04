@@ -5,6 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
+import com.swapapp.swapappmockserver.model.trades.StickerTrade;
+import com.swapapp.swapappmockserver.model.trades.TradingCard;
+import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -19,6 +23,9 @@ import java.util.Optional;
 public class UserRepositoryImpl implements IUserRepository {
     private static final String USER_FILE_PATH = "data/users.json";
     private List<User> users = new ArrayList<>();
+
+    @Autowired
+    private IAlbumRepository albumRepository;
 
     public UserRepositoryImpl() throws IOException {
         loadUsers();
@@ -77,6 +84,34 @@ public class UserRepositoryImpl implements IUserRepository {
     public List<UserAlbumDto> getUserAlbums(String email) {
         Optional<User> user = users.stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst();
         return user.isPresent() ? user.get().getAlbums() : new ArrayList<>();
+    }
+
+    @Override
+    public void saveCards(Album album, String email) {
+        List<UserAlbumDto> userAlbumDtos = getUserAlbums(email);
+        Optional<User> user = findByEmail(email);
+
+        Optional<UserAlbumDto> userAlbumDto = userAlbumDtos.stream().filter(userAlbumDto1 -> userAlbumDto1.getId().equals(album.getId())).findFirst();
+
+        userAlbumDto.ifPresent(albumDto -> albumDto.getStickers().forEach(stickerTrade -> updateSticker(stickerTrade, album.getTradingCards())));
+
+        if(user.isPresent()){
+            users.remove(user.get());
+            users.add(user.get());
+        }
+        persistUsers();
+        /*Optional<Album> existing = getAlbum(album.getId());
+        if (existing.isPresent()) {
+            listOfAlbums.remove(existing.get());
+        }
+        listOfAlbums.add(album);
+        persistAlbums(); */// Guardar en el archivo
+    }
+
+
+    private void updateSticker (StickerTrade sticker, List<TradingCard> tradingCards){
+        Optional<TradingCard> tradingCard = tradingCards.stream().filter(tradingCard1 -> tradingCard1.getNumber().equals(sticker.getNumber())).findFirst();
+        tradingCard.ifPresent(card -> sticker.setRepeatCount(card.getRepeatedQuantity()));
     }
 
 }

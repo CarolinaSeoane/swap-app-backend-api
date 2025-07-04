@@ -1,6 +1,7 @@
 package com.swapapp.swapappmockserver.repository.user;
 
 import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
+import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface IUserRepository {
     void save(User user);
     Optional<User> findById(String id);
     List<UserAlbumDto> getUserAlbums(String email);
+    void saveCards(Album album, String email);
 }
