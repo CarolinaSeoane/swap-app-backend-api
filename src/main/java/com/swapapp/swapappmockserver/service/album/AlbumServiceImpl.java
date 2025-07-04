@@ -30,8 +30,8 @@ public class AlbumServiceImpl implements IAlbumService {
     ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public List<AlbumCategoryCountDto> getAlbumCountByCategory() {
-        List<Album> albums = albumRepository.getAlbums();
+    public List<AlbumCategoryCountDto> getAlbumCountByCategory(String email) {
+        List<Album> albums = getUserAlbums(email);
         if (albums.isEmpty()){
             //
         }
@@ -43,7 +43,8 @@ public class AlbumServiceImpl implements IAlbumService {
                 .collect(Collectors.toList());
     }
 
-    private Album getAlbum(String albumId) {
+    @Override
+    public Album getAlbum(String albumId) {
         List<Album> albums = albumRepository.getAlbums();
         if (albums.isEmpty()){
             //

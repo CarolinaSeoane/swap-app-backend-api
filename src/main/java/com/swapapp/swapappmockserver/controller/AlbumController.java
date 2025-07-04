@@ -21,10 +21,10 @@ public class AlbumController {
 
     Logger logger = Logger.getLogger(AlbumController.class.getName());
 
-    @GetMapping("/count-by-category")
-    public ResponseEntity<List<AlbumCategoryCountDto>> getAlbumCountByCategory() {
-        // get user id
-        return new ResponseEntity<>(albumServiceImpl.getAlbumCountByCategory(), HttpStatus.OK);
+    @GetMapping("/count-by-category/{email}")
+    public ResponseEntity<List<AlbumCategoryCountDto>> getAlbumCountByCategory(@PathVariable("email") String email) {
+        logger.info("/count-by-category");
+        return new ResponseEntity<>(albumServiceImpl.getAlbumCountByCategory(email), HttpStatus.OK);
     }
 
     @GetMapping("/{email}")

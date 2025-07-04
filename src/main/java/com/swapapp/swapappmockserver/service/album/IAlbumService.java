@@ -7,7 +7,8 @@ import com.swapapp.swapappmockserver.model.trades.TradingCard;
 import java.util.List;
 
 public interface IAlbumService {
-    List<AlbumCategoryCountDto> getAlbumCountByCategory();
+    List<AlbumCategoryCountDto> getAlbumCountByCategory(String email);
+    Album getAlbum(String albumId);
     List<Album> getUserAlbums(String email);
     Album getUserAlbum(String albumId, String email);
     List<Album> getUserAlbumsCategory(String category, String userId);
