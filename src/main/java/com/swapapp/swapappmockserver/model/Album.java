@@ -21,4 +21,5 @@ public class Album {
     private String cover;
     private Integer releaseYear;
     private Integer totalCards;
+
 }

@@ -1,1 +1,250 @@
-[{"id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc","email":"marcos@gmail.com","fullName":"Marcos Gomez","username":"marcosgome","password":"$2a$10$4pKzWeEYYcyYRK3WF2gsHu7/ybMHFtdjEuY0U9ZvygaCCBXmTDew2","profileImageUrl":"/images/marcos.jpg"}]
+[
+  {
+    "id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc",
+    "email":"marcos@gmail.com",
+    "fullName":"Marcos Gomez",
+    "username":"marcos",
+    "password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS",
+    "profileImageUrl":"/images/marcos.jpg",
+    "location": "Caballito, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 2,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 3,
+            "repeatCount": 0,
+            "obtained": true
+          },
+          {
+            "number": 5,
+            "repeatCount": 4,
+            "obtained": true
+          },
+          {
+            "number": 6,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 9,
+            "repeatCount": 6,
+            "obtained": true
+          },
+          {
+            "number": 10,
+            "repeatCount": 0,
+            "obtained": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "stickers": [
+          {
+            "number": 2,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 5,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 6,
+            "repeatCount": 0,
+            "obtained": false
+          },
+          {
+            "number": 7,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 9,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 10,
+            "repeatCount": 3,
+            "obtained": true
+          }
+        ]
+      }
+    ],
+    "friends": ["f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9", "f408e3c6-ab6a-483d-9588-126b77f9197c"]
+  },
+  {
+    "id":"7bab2222-61d7-4d84-898c-d94c393f19dc",
+    "email":"pedro@gmail.com",
+    "fullName":"pedro",
+    "username":"pedro",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "location": "Devoto, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "bad",
+    "profileImageUrl":null
+  },
+  {
+    "id":"f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9",
+    "email":"matias@gmail.com",
+    "fullName":"matias",
+    "username":"matias",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "profileImageUrl":"/images/matias.jpg",
+    "location": "Nuñez, Ciudad de Buenos Aires",
+    "shipping": false,
+    "reputation": "bad",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 2,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 4,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 5,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 8,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 10,
+            "repeatCount": 0,
+            "obtained": false
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 4,
+            "repeatCount": 0,
+            "obtained": true
+          },
+          {
+            "number": 5,
+            "repeatCount": 3,
+            "obtained": true
+          },
+          {
+            "number": 7,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 8,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 9,
+            "repeatCount": 0,
+            "obtained": false
+          }
+        ]
+      }
+    ],
+    "friends":  ["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]
+  },
+  {
+    "id":"f408e3c6-ab6a-483d-9588-126b77f9197c",
+    "email":"valeria@gmail.com",
+    "fullName":"valeria",
+    "username":"valeria",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "profileImageUrl":null,
+    "location": "Belgrano, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 4,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 6,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 8,
+            "repeatCount": 0,
+            "obtained": true
+          },
+          {
+            "number": 9,
+            "repeatCount": 4,
+            "obtained": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "stickers": [
+          {
+            "number": 3,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 6,
+            "repeatCount": 2,
+            "obtained": true
+          },
+          {
+            "number": 8,
+            "repeatCount": 1,
+            "obtained": true
+          },
+          {
+            "number": 10,
+            "repeatCount": 0,
+            "obtained": false
+          }
+        ]
+      }
+    ],
+    "friends":  ["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]
+  }
+]

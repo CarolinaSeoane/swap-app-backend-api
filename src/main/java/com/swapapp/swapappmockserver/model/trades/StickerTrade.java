@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TradingCard {
+public class StickerTrade {
     private Integer number;
-    private String albumId;
-    private Boolean obtained = false;
-    private Integer repeatedQuantity;
+    private Integer repeatCount;
 }

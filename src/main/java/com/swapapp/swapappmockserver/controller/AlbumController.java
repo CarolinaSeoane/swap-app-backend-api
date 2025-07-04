@@ -1,20 +1,16 @@
 package com.swapapp.swapappmockserver.controller;
 
 import com.swapapp.swapappmockserver.dto.Album.AlbumCategoryCountDto;
-import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
+import com.swapapp.swapappmockserver.model.Album;
+import com.swapapp.swapappmockserver.model.trades.TradingCard;
 import com.swapapp.swapappmockserver.service.album.AlbumServiceImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
-import com.swapapp.swapappmockserver.model.Album;
 
 @RestController
 @RequestMapping("/albums")
@@ -25,28 +21,33 @@ public class AlbumController {
 
     Logger logger = Logger.getLogger(AlbumController.class.getName());
 
-    @GetMapping("/count-by-category")
-    public ResponseEntity<List<AlbumCategoryCountDto>> getAlbumCountByCategory() {
-        // get user id
-        return new ResponseEntity<>(albumServiceImpl.getAlbumCountByCategory(), HttpStatus.OK);
+    @GetMapping("/count-by-category/{email}")
+    public ResponseEntity<List<AlbumCategoryCountDto>> getAlbumCountByCategory(@PathVariable("email") String email) {
+        logger.info("/count-by-category");
+        return new ResponseEntity<>(albumServiceImpl.getAlbumCountByCategory(email), HttpStatus.OK);
     }
 
-    @GetMapping("/category")
-    public ResponseEntity<List<Album>> getAlbumsCategroy(@RequestParam("categoryId") String categoryId) {
-        logger.info("/albums categroy " + categoryId);
-        return new ResponseEntity<>(albumServiceImpl.getAlbumsCategory(categoryId), HttpStatus.OK);
-    }
-
-    @GetMapping("/{albumId}")
-    public ResponseEntity<Album> getAlbum(@RequestParam("albumId") String albumId) {
-        logger.info("/albums by id " + albumId);
-        return new ResponseEntity<>(albumServiceImpl.getAlbum(albumId), HttpStatus.OK);
-    }
-
-    @GetMapping()
-    public ResponseEntity<List<Album>> getAlbums() {
+    @GetMapping("/{email}")
+    public ResponseEntity<List<Album>> getUserAlbums(@PathVariable("email") String email) {
         logger.info("/albums");
-        return new ResponseEntity<>(albumServiceImpl.getAlbums(), HttpStatus.OK);
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbums(email), HttpStatus.OK);
     }
 
+    @GetMapping("/{albumId}/{email}")
+    public ResponseEntity<Album> getUserAlbum(@PathVariable("albumId") String albumId, @PathVariable("email") String email) {
+        logger.info("/albums by id");
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbum(albumId, email), HttpStatus.OK);
+    }
+
+    @GetMapping("/category/{email}")
+    public ResponseEntity<List<Album>> getUserAlbumsCategory(@PathVariable("email") String email, @RequestParam("categoryId") String categoryId) {
+        logger.info("/albums category ");
+        return new ResponseEntity<>(albumServiceImpl.getUserAlbumsCategory(categoryId, email), HttpStatus.OK);
+    }
+
+    @PutMapping("/{albumId}/{email}")
+    public ResponseEntity<Album> updateUserCards(@PathVariable String albumId, @PathVariable String email, @RequestBody List<TradingCard> tradingCards) {
+        logger.info("/updateUserCards");
+        return new ResponseEntity<>(albumServiceImpl.updateUserCards(albumId, tradingCards, email), HttpStatus.OK);
+    }
 }

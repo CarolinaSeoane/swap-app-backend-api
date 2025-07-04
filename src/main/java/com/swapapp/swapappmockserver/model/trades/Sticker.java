@@ -12,3 +12,4 @@ public class Sticker {
     private String name;
     private String number;
 }
+

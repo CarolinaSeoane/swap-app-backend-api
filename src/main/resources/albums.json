@@ -14,28 +14,24 @@
             "albumId": "Qatar 2022",
             "obtained": false,
             "repeatedQuantity": 0
-
         },
         {
             "number": 3,
             "albumId": "Qatar 2022",
             "obtained": true,
             "repeatedQuantity": 7
-
         },
         {
             "number": 4,
             "albumId": "Qatar 2022",
             "obtained": true,
             "repeatedQuantity": 1
-
         },
         {
             "number": 5,
             "albumId": "Qatar 2022",
             "obtained": true,
             "repeatedQuantity": 0
-
         }],
         "finished": false,
         "category": "FOOTBALL",

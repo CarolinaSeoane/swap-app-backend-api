@@ -2,7 +2,13 @@ package com.swapapp.swapappmockserver.repository.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
+import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
+import com.swapapp.swapappmockserver.model.trades.StickerTrade;
+import com.swapapp.swapappmockserver.model.trades.TradingCard;
+import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -10,12 +16,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements IUserRepository {
     private static final String USER_FILE_PATH = "data/users.json";
     private List<User> users = new ArrayList<>();
+
+    @Autowired
+    private IAlbumRepository albumRepository;
 
     public UserRepositoryImpl() throws IOException {
         loadUsers();
@@ -56,6 +66,11 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     @Override
+    public Optional<User> findById(String id) {
+        return users.stream().filter(u -> u.getId().equals(id)).findFirst();
+    }
+
+    @Override
     public void save(User user) {
         Optional<User> existing = findByEmail(user.getEmail());
         if (existing.isPresent()) {
@@ -63,6 +78,40 @@ public class UserRepositoryImpl implements IUserRepository {
         }
         users.add(user);
         persistUsers(); // Guardar en el archivo
+    }
+
+    @Override
+    public List<UserAlbumDto> getUserAlbums(String email) {
+        Optional<User> user = users.stream().filter(u -> u.getEmail().equalsIgnoreCase(email)).findFirst();
+        return user.isPresent() ? user.get().getAlbums() : new ArrayList<>();
+    }
+
+    @Override
+    public void saveCards(Album album, String email) {
+        List<UserAlbumDto> userAlbumDtos = getUserAlbums(email);
+        Optional<User> user = findByEmail(email);
+
+        Optional<UserAlbumDto> userAlbumDto = userAlbumDtos.stream().filter(userAlbumDto1 -> userAlbumDto1.getId().equals(album.getId())).findFirst();
+
+        userAlbumDto.ifPresent(albumDto -> albumDto.getStickers().forEach(stickerTrade -> updateSticker(stickerTrade, album.getTradingCards())));
+
+        if(user.isPresent()){
+            users.remove(user.get());
+            users.add(user.get());
+        }
+        persistUsers();
+        /*Optional<Album> existing = getAlbum(album.getId());
+        if (existing.isPresent()) {
+            listOfAlbums.remove(existing.get());
+        }
+        listOfAlbums.add(album);
+        persistAlbums(); */// Guardar en el archivo
+    }
+
+
+    private void updateSticker (StickerTrade sticker, List<TradingCard> tradingCards){
+        Optional<TradingCard> tradingCard = tradingCards.stream().filter(tradingCard1 -> tradingCard1.getNumber().equals(sticker.getNumber())).findFirst();
+        tradingCard.ifPresent(card -> sticker.setRepeatCount(card.getRepeatedQuantity()));
     }
 
 }
