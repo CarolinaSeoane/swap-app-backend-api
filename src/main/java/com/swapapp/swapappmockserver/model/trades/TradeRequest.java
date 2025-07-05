@@ -1,6 +1,6 @@
 package com.swapapp.swapappmockserver.model.trades;
 
-import com.swapapp.swapappmockserver.model.User;
+import com.swapapp.swapappmockserver.dto.User.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,11 +11,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TradeRequest {
-    private String id;
-    private String fromUserEmail;
-    private String toUserEmail;
+    private Integer album;
+    private String albumName;
+    private UserDto from;
+    private UserDto to;
+    private List<Integer> stickers;
+    private List<Integer> toGive;
     private TradeRequestStatus status;
-    private List<Sticker> offeredStickers;
-    private List<Sticker> requestedStickers;
-    private boolean seen;
+
+    public void switchToAndFrom() {
+        UserDto tempFrom = this.from;
+        this.from = this.to;
+        this.to = tempFrom;
+    }
 }
