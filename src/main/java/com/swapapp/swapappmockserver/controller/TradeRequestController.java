@@ -3,6 +3,11 @@ package com.swapapp.swapappmockserver.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swapapp.swapappmockserver.dto.TradeRequest.TradeRequestDto;
+import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
+import com.swapapp.swapappmockserver.model.trades.TradeRequest;
+import com.swapapp.swapappmockserver.service.trade.TradeServiceImpl;
+import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +24,38 @@ import java.io.File;
 @RequestMapping("/trade-requests")
 public class TradeRequestController {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private TradeServiceImpl tradeService;
+    @Autowired
+    private UserServiceImpl userService;
 
     @GetMapping("/get-all")
-    public ResponseEntity<String> getAllRequests() throws IOException {
-        System.out.println("✅ LLEGUE a controller");
-
-        // Ruta absoluta basada en el directorio actual de ejecución
-        File file = new File("data/tradeRequests.json");
-        if (!file.exists()) {
-            System.out.println("❌ El archivo no fue encontrado en: " + file.getAbsolutePath());
-            return ResponseEntity.status(404).body("Archivo no encontrado");
+    public ResponseEntity<?> getAllRequests(
+            @RequestHeader("Authorization") String authHeader
+    ){
+        try {
+            String token = authHeader.replace("Bearer ", "");
+            String userEmail = userService.getCurrentUser(token).getEmail();
+            List<TradeRequest> tradeRequests = tradeService.getAllTradeRequestsByUser(userEmail);
+            return ResponseEntity.ok(tradeRequests);
+        } catch (RuntimeException e) {
+            System.out.println("Error getting trade requests: " + e);
+            return ResponseEntity.status(500).body(null);
         }
-
-        String json = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-
-        System.out.println("📦 Contenido leído: " + json);
-        return ResponseEntity.ok(json);
     }
+
+//    @PostMapping("/new")
+//    public ResponseEntity<?> tradeRequest(
+//            @RequestHeader("Authorization") String authHeader
+//    ) {
+//        try {
+//            String token = authHeader.replace("Bearer ", "");
+//            List<PossibleTrade> trades = userService.getPossibleTrades(token);
+//            return ResponseEntity.ok(trades);
+//        } catch (RuntimeException e) {
+//            System.out.println("Error getting possible trades: " + e);
+//            return ResponseEntity.status(500).body(null);
+//        }
+//    }
 
 }
