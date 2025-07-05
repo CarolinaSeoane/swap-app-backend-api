@@ -18,4 +18,5 @@ public class PossibleTrade {
     private String albumName;
     private UserDto from;
     private List<Integer> stickers;
+    private List<Integer> toGive;
 }
