@@ -124,6 +124,23 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> new UserDto(
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getUsername(),
+                        user.getProfileImageUrl(),
+                        user.getLocation(),
+                        user.getShipping(),
+                        user.getReputation(),
+                        user.getAlbums(),
+                        user.getFriends()
+                ))
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Override
     public List<PossibleTrade> findPossibleTrades(UserDto user, UserDto friend) {
         List<UserAlbumDto> myAlbums = user.getAlbums();
         List<UserAlbumDto> friendAlbums = friend.getAlbums();

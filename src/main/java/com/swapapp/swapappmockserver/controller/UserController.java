@@ -137,4 +137,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<UserDto> updateCurrentUser(
+            @PathVariable String email
+    ) {
+        try {
+            UserDto user = userService.getUserByEmail(email);
+            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+    }
+
 }
