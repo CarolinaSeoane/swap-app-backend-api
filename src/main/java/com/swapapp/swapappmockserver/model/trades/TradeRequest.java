@@ -18,10 +18,4 @@ public class TradeRequest {
     private List<Integer> stickers;
     private List<Integer> toGive;
     private TradeRequestStatus status;
-
-    public void switchToAndFrom() {
-        UserDto tempFrom = this.from;
-        this.from = this.to;
-        this.to = tempFrom;
-    }
 }

@@ -34,8 +34,11 @@ public class TradeRepositoryImpl implements ITradeRepository {
     public void createTradeRequestFromPossibleTrade(PossibleTrade possibleTrade, UserDto from) {
         TradeRequest tradeRequest = mapper.convertValue(possibleTrade, TradeRequest.class);
         tradeRequest.setStatus(TradeRequestStatus.PENDING);
-        tradeRequest.switchToAndFrom();
+        // Switch to and from
+        System.out.println("FROM que llega del front: " + tradeRequest.getFrom());
+        tradeRequest.setTo(tradeRequest.getFrom());
         tradeRequest.setFrom(from);
+
         tradeRequests.add(tradeRequest);
     }
 
