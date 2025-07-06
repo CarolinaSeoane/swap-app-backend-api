@@ -4,7 +4,6 @@ import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.TradeRequest;
 import com.swapapp.swapappmockserver.repository.trade.ITradeRepository;
 import com.swapapp.swapappmockserver.service.user.IUserService;
-import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -10,7 +10,6 @@ import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.security.JwtUtil;
 import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
