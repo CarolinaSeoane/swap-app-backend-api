@@ -13,4 +13,8 @@ import java.util.List;
 public class UserAlbumDto {
     private Integer id;
     private List<StickerTrade> stickers;
+
+    public void addSticker(StickerTrade newSticker) {
+        stickers.add(newSticker);
+    }
 }

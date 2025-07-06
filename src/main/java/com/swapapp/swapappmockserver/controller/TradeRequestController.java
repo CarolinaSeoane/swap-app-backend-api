@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/trade-requests")
@@ -45,6 +46,20 @@ public class TradeRequestController {
             return ResponseEntity.status(201).body(null);
         } catch (RuntimeException e) {
             System.out.println("Error creating trade request: " + e);
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @PutMapping("/reject/{tradeId}")
+    public ResponseEntity<Void> rejectTradeRequest(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable UUID tradeId
+            ) {
+        try {
+            tradeService.rejectTradeRequest(tradeId);
+            return ResponseEntity.status(200).body(null);
+        } catch (RuntimeException e) {
+            System.out.println("Error rejecting trade request: " + e);
             return ResponseEntity.status(500).body(null);
         }
     }

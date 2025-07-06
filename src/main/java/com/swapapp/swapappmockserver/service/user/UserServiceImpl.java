@@ -267,4 +267,40 @@ public class UserServiceImpl implements IUserService {
         userRepository.save(user);
     }
 
+    public UserAlbumDto getUserAlbumById(UserDto user, Integer albumId) {
+        List<UserAlbumDto> myAlbums = user.getAlbums();
+
+        return myAlbums.stream().filter(
+                album -> album.getId().equals(albumId)
+        ).toList().getFirst();
+    }
+
+    public Optional<StickerTrade> getStickerFromUserAlbum(UserAlbumDto album, Integer stickerNumber) {
+        List<StickerTrade> stickers = album.getStickers();
+        return Optional.ofNullable(stickers.stream().filter(
+                sticker -> sticker.getNumber().equals(stickerNumber)
+        ).toList().getFirst());
+    }
+
+    @Override
+    public void addStickerToAlbum(UserDto user, Integer stickerNumber, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+
+        if (sticker.isPresent()) {
+            sticker.get().incrementRepeatCount();
+        } else {
+            StickerTrade newSticker = new StickerTrade(stickerNumber, 0);
+            album.addSticker(newSticker);
+        }
+    }
+
+    @Override
+    public void removeStickerFromAlbum(UserDto user, Integer stickerNumber, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+
+        sticker.ifPresent(StickerTrade::decrementRepeatCount);
+    }
+
 }
