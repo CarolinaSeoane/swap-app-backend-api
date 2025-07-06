@@ -11,13 +11,11 @@ import com.swapapp.swapappmockserver.model.trades.TradingCard;
 import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository

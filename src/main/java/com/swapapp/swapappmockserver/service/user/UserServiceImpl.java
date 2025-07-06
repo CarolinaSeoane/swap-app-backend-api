@@ -1,12 +1,10 @@
 package com.swapapp.swapappmockserver.service.user;
 
-import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.dto.User.*;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
 import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.StickerTrade;
-import com.swapapp.swapappmockserver.repository.album.IAlbumRepository;
 import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 import com.swapapp.swapappmockserver.security.JwtUtil;
 import com.swapapp.swapappmockserver.service.album.AlbumServiceImpl;
