@@ -22,7 +22,7 @@ public interface IUserService {
     UserDto getUserById(String id);
     List<PossibleTrade> findPossibleTrades(UserDto user, UserDto friend);
     List<PossibleTrade> getPossibleTrades(String token);
-    void addStickerToAlbum(UserDto user, Integer sticker, Integer albumId);
-    void removeStickerFromAlbum(UserDto user, Integer sticker, Integer albumId);
+    void addStickersToAlbum(UserDto user, List<Integer> sticker, Integer albumId);
+    void removeStickersFromAlbum(UserDto user, List<Integer> sticker, Integer albumId);
 }
 

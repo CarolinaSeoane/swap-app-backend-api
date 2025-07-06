@@ -1,5 +1,7 @@
 package com.swapapp.swapappmockserver.service.trade;
 
+import com.swapapp.swapappmockserver.dto.User.UserDto;
+import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.TradeRequest;
 import com.swapapp.swapappmockserver.model.trades.TradeRequestStatus;
@@ -38,8 +40,24 @@ public class TradeServiceImpl implements ITradeService {
     }
 
     @Override
-    public void acceptTradeRequest(UUID tradeId) {
+    public void acceptTradeRequest(TradeRequest tradeRequestToAccept) {
+        UUID tradeId = tradeRequestToAccept.getId();
+        Integer albumId = tradeRequestToAccept.getAlbum();
+        System.out.println("Trade request to accept: " + tradeId);
+        UserDto sourceUser = tradeRequestToAccept.getFrom();
+        UserDto endUser = tradeRequestToAccept.getTo();
 
+        List<Integer> sourceUserGivingStickers = tradeRequestToAccept.getStickers();
+        List<Integer> endUserGivingStickers = tradeRequestToAccept.getToGive();
+
+        userService.removeStickersFromAlbum(sourceUser, sourceUserGivingStickers, albumId);
+        userService.removeStickersFromAlbum(endUser, endUserGivingStickers, albumId);
+
+        userService.addStickersToAlbum(sourceUser, endUserGivingStickers, albumId);
+        userService.addStickersToAlbum(endUser, sourceUserGivingStickers, albumId);
+
+        TradeRequest tradeRequest = tradeRepository.getTradeRequestById(tradeId);
+        tradeRequest.setStatus(TradeRequestStatus.ACCEPTED);
     }
 
 }

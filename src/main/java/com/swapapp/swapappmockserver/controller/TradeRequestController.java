@@ -64,4 +64,18 @@ public class TradeRequestController {
         }
     }
 
+    @PutMapping("/accept")
+    public ResponseEntity<Void> acceptTradeRequest(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody TradeRequest tradeRequest
+    ) {
+        try {
+            tradeService.acceptTradeRequest(tradeRequest);
+            return ResponseEntity.status(200).body(null);
+        } catch (RuntimeException e) {
+            System.out.println("Error accepting trade request: " + e);
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 }

@@ -10,6 +10,6 @@ public interface ITradeService {
     List<TradeRequest> getAllTradeRequestsByUser(String email);
     void createTradeRequest(PossibleTrade possibleTrade, String token);
     void rejectTradeRequest(UUID tradeId);
-    void acceptTradeRequest(UUID tradeId);
+    void acceptTradeRequest(TradeRequest tradeRequest);
 }
 

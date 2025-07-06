@@ -283,24 +283,27 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void addStickerToAlbum(UserDto user, Integer stickerNumber, Integer albumId) {
+    public void addStickersToAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
         UserAlbumDto album = this.getUserAlbumById(user, albumId);
-        Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
 
-        if (sticker.isPresent()) {
-            sticker.get().incrementRepeatCount();
-        } else {
-            StickerTrade newSticker = new StickerTrade(stickerNumber, 0);
-            album.addSticker(newSticker);
-        }
+            if (sticker.isPresent()) {
+                sticker.get().incrementRepeatCount();
+            } else {
+                StickerTrade newSticker = new StickerTrade(stickerNumber, 0);
+                album.addSticker(newSticker);
+            }
+        });
     }
 
     @Override
-    public void removeStickerFromAlbum(UserDto user, Integer stickerNumber, Integer albumId) {
+    public void removeStickersFromAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
         UserAlbumDto album = this.getUserAlbumById(user, albumId);
-        Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
-
-        sticker.ifPresent(StickerTrade::decrementRepeatCount);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+            sticker.ifPresent(StickerTrade::decrementRepeatCount);
+        });
     }
 
 }
