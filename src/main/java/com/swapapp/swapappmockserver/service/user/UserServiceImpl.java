@@ -145,8 +145,10 @@ public class UserServiceImpl implements IUserService {
             List<StickerTrade> myStickers = myAlbum.getStickers();
             List<StickerTrade> friendStickers = matchingAlbum.getStickers();
 
-            List<Integer> toTrade = new ArrayList<>();;
+            List<Integer> toReceive = new ArrayList<>();
+            List<Integer> toGive = new ArrayList<>();
 
+            // friend can give me
             for (StickerTrade sticker : friendStickers) {
                 Integer stickerNum = sticker.getNumber();
                 Integer repeatCount = sticker.getRepeatCount();
@@ -155,17 +157,32 @@ public class UserServiceImpl implements IUserService {
                         .anyMatch(mySticker -> mySticker.getNumber().equals(stickerNum));
 
                 if (!haveSticker && repeatCount > 0) {
-                    toTrade.add(stickerNum);
+                    toReceive.add(stickerNum);
                 }
             }
 
-            if (!toTrade.isEmpty()) {
+            // I can give friend
+            for (StickerTrade sticker : myStickers) {
+                Integer stickerNum = sticker.getNumber();
+                Integer repeatCount = sticker.getRepeatCount();
+
+                boolean friendHas = friendStickers.stream()
+                        .anyMatch(friendSticker -> friendSticker.getNumber().equals(stickerNum));
+
+                if (!friendHas && repeatCount > 0) {
+                    toGive.add(stickerNum);
+                }
+            }
+
+            // the trade is valid if they can give me something and I can give them something
+            if (!toReceive.isEmpty() && !toGive.isEmpty()) {
                 PossibleTrade trade = new PossibleTrade();
                 Album album = albumService.getAlbum(String.valueOf(albumId));
                 trade.setAlbum(albumId);
                 trade.setAlbumName(album.getName());
-                trade.setStickers(toTrade);
+                trade.setStickers(toReceive);
                 trade.setFrom(friend);
+                trade.setToGive(toGive);
 
                 trades.add(trade);
 
