@@ -2,6 +2,7 @@ package com.swapapp.swapappmockserver.repository.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
@@ -91,19 +92,13 @@ public class UserRepositoryImpl implements IUserRepository {
 
         Optional<UserAlbumDto> userAlbumDto = userAlbumDtos.stream().filter(userAlbumDto1 -> userAlbumDto1.getId().equals(album.getId())).findFirst();
 
-        userAlbumDto.ifPresent(albumDto -> albumDto.getStickers().forEach(stickerTrade -> updateSticker(stickerTrade, album.getTradingCards())));
+        userAlbumDto.ifPresent(albumDto -> isStickerPresent(albumDto, album));
 
         if(user.isPresent()){
             users.remove(user.get());
             users.add(user.get());
         }
         persistUsers();
-        /*Optional<Album> existing = getAlbum(album.getId());
-        if (existing.isPresent()) {
-            listOfAlbums.remove(existing.get());
-        }
-        listOfAlbums.add(album);
-        persistAlbums(); */// Guardar en el archivo
     }
 
 
@@ -112,4 +107,14 @@ public class UserRepositoryImpl implements IUserRepository {
         tradingCard.ifPresent(card -> sticker.setRepeatCount(card.getRepeatedQuantity()));
     }
 
+    private void isStickerPresent(UserAlbumDto albumDto, Album album){
+        List<TradingCard> tradingCardsToAdd = album.getTradingCards().stream().filter(tradingCard -> tradingCard.getRepeatedQuantity() > 0 && !tradingCard.getObtained()).toList();
+        albumDto.getStickers().forEach(stickerTrade -> updateSticker(stickerTrade, album.getTradingCards()));
+
+        List<StickerTrade> stickerTrades = tradingCardsToAdd.stream().map(tradingCard -> new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity())).toList();
+
+        for(StickerTrade sticker : stickerTrades){
+            albumDto.getStickers().add(sticker);
+        }
+    }
 }
