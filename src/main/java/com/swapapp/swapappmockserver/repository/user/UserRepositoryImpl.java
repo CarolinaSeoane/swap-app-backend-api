@@ -27,29 +27,51 @@ public class UserRepositoryImpl implements IUserRepository {
     private IAlbumRepository albumRepository;
 
     public UserRepositoryImpl() throws IOException {
+        System.out.println("Inicializando UserRepositoryImpl...");
         loadUsers();
+        System.out.println("UserRepositoryImpl inicializado con " + users.size() + " usuarios");
     }
 
     private void loadUsers() throws IOException {
         File file = new File(USER_FILE_PATH);
         ObjectMapper mapper = new ObjectMapper();
 
+        System.out.println("Cargando usuarios desde: " + file.getAbsolutePath());
+        System.out.println("Archivo existe: " + file.exists());
+        
         if (!file.exists()) {
-            // Crear archivo vacío
+            // Crear archivo vacío solo si no existe
+            System.out.println("Creando archivo de usuarios vacío...");
             file.getParentFile().mkdirs(); // Crea carpeta 'data' si no existe
             file.createNewFile();
             users = new ArrayList<>();
-            persistUsers(); // Guarda lista vacía en el archivo
+            // NO persistir inmediatamente para evitar sobreescribir datos existentes
         } else {
-            users = mapper.readValue(file, new TypeReference<List<User>>() {});
+            try {
+                System.out.println("Leyendo usuarios del archivo...");
+                users = mapper.readValue(file, new TypeReference<List<User>>() {});
+                if (users == null) {
+                    users = new ArrayList<>();
+                }
+                System.out.println("Usuarios cargados: " + users.size());
+                for (User user : users) {
+                    System.out.println("  - " + user.getEmail());
+                }
+            } catch (IOException e) {
+                System.err.println("Error al cargar usuarios, creando lista vacía: " + e.getMessage());
+                users = new ArrayList<>();
+            }
         }
     }
 
     private void persistUsers() {
         try {
             ObjectMapper mapper = new ObjectMapper();
+            System.out.println("Persistiendo " + users.size() + " usuarios en " + USER_FILE_PATH);
             mapper.writeValue(new File(USER_FILE_PATH), users);
+            System.out.println("Usuarios guardados exitosamente");
         } catch (IOException e) {
+            System.err.println("Error al guardar usuarios: " + e.getMessage());
             throw new RuntimeException("No se pudo guardar el archivo users.json", e);
         }
     }
@@ -71,11 +93,14 @@ public class UserRepositoryImpl implements IUserRepository {
 
     @Override
     public void save(User user) {
+        System.out.println("Guardando usuario: " + user.getEmail() + " (Total actual: " + users.size() + ")");
         Optional<User> existing = findByEmail(user.getEmail());
         if (existing.isPresent()) {
+            System.out.println("Usuario existente encontrado, reemplazando...");
             users.remove(existing.get());
         }
         users.add(user);
+        System.out.println("Usuario agregado. Total ahora: " + users.size());
         persistUsers(); // Guardar en el archivo
     }
 

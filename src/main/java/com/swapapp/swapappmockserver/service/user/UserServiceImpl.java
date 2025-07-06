@@ -43,12 +43,12 @@ public class UserServiceImpl implements IUserService {
             dto.getFullName(),
             dto.getUsername(),
             passwordEncoder.encode(dto.getPassword()),
-            dto.getProfileImageUrl(),
-            dto.getLocation(),
-            dto.getShipping(),
-            dto.getReputation(),
-            dto.getAlbums(),
-            dto.getFriends()
+            null,                          // profileImageUrl: null por defecto
+            null,                          // location: null por defecto  
+            null,                          // shipping: null por defecto
+            null,                          // reputation: null por defecto
+            new ArrayList<>(),             // albums: lista vacía por defecto
+            new ArrayList<>()              // friends: lista vacía por defecto
         );
 
         userRepository.save(newUser);
@@ -60,8 +60,8 @@ public class UserServiceImpl implements IUserService {
             newUser.getEmail(),
             newUser.getFullName(),
             newUser.getUsername(),
-            newUser.getAlbums(),
-            newUser.getFriends()
+            newUser.getAlbums(),        // Ya inicializado como lista vacía
+            newUser.getFriends()        // Ya inicializado como lista vacía
         );
     }
 
@@ -83,8 +83,8 @@ public class UserServiceImpl implements IUserService {
             user.getEmail(),
             user.getFullName(),
             user.getUsername(),
-            user.getAlbums(),
-            user.getFriends()
+            user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+            user.getFriends() != null ? user.getFriends() : new ArrayList<>()
         );
     }
 
@@ -100,8 +100,8 @@ public class UserServiceImpl implements IUserService {
                         user.getLocation(),
                         user.getShipping(),
                         user.getReputation(),
-                        user.getAlbums(),
-                        user.getFriends()
+                        user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                        user.getFriends() != null ? user.getFriends() : new ArrayList<>()
                 ))
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
@@ -117,8 +117,8 @@ public class UserServiceImpl implements IUserService {
                         user.getLocation(),
                         user.getShipping(),
                         user.getReputation(),
-                        user.getAlbums(),
-                        user.getFriends()
+                        user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                        user.getFriends() != null ? user.getFriends() : new ArrayList<>()
                 ))
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
@@ -249,8 +249,8 @@ public class UserServiceImpl implements IUserService {
                 user.getLocation(),
                 user.getShipping(),
                 user.getReputation(),
-                user.getAlbums(),
-                user.getFriends()
+                user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                user.getFriends() != null ? user.getFriends() : new ArrayList<>()
         );
     }
 
