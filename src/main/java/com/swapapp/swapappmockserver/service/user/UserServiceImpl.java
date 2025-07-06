@@ -277,9 +277,9 @@ public class UserServiceImpl implements IUserService {
 
     public Optional<StickerTrade> getStickerFromUserAlbum(UserAlbumDto album, Integer stickerNumber) {
         List<StickerTrade> stickers = album.getStickers();
-        return Optional.ofNullable(stickers.stream().filter(
-                sticker -> sticker.getNumber().equals(stickerNumber)
-        ).toList().getFirst());
+        return stickers.stream()
+                .filter(sticker -> sticker.getNumber().equals(stickerNumber))
+                .findFirst();
     }
 
     @Override

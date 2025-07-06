@@ -43,12 +43,12 @@ public class TradeServiceImpl implements ITradeService {
     public void acceptTradeRequest(TradeRequest tradeRequestToAccept) {
         UUID tradeId = tradeRequestToAccept.getId();
         Integer albumId = tradeRequestToAccept.getAlbum();
-        System.out.println("Trade request to accept: " + tradeId);
+        
         UserDto sourceUser = tradeRequestToAccept.getFrom();
         UserDto endUser = tradeRequestToAccept.getTo();
 
-        List<Integer> sourceUserGivingStickers = tradeRequestToAccept.getStickers();
-        List<Integer> endUserGivingStickers = tradeRequestToAccept.getToGive();
+        List<Integer> sourceUserGivingStickers = tradeRequestToAccept.getToGive();
+        List<Integer> endUserGivingStickers = tradeRequestToAccept.getStickers();
 
         userService.removeStickersFromAlbum(sourceUser, sourceUserGivingStickers, albumId);
         userService.removeStickersFromAlbum(endUser, endUserGivingStickers, albumId);
