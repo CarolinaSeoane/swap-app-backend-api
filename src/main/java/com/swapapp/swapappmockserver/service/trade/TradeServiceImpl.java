@@ -44,8 +44,11 @@ public class TradeServiceImpl implements ITradeService {
         UUID tradeId = tradeRequestToAccept.getId();
         Integer albumId = tradeRequestToAccept.getAlbum();
         
-        UserDto sourceUser = tradeRequestToAccept.getFrom();
-        UserDto endUser = tradeRequestToAccept.getTo();
+        UserDto sourceUserFromRequest = tradeRequestToAccept.getFrom();
+        UserDto endUserFromRequest = tradeRequestToAccept.getTo();
+
+        UserDto sourceUser = userService.getUserByEmail(sourceUserFromRequest.getEmail());
+        UserDto endUser = userService.getUserByEmail(endUserFromRequest.getEmail());
 
         List<Integer> sourceUserGivingStickers = tradeRequestToAccept.getToGive();
         List<Integer> endUserGivingStickers = tradeRequestToAccept.getStickers();
