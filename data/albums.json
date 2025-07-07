@@ -42,7 +42,7 @@
             }],
         "finished": false,
         "category": "FOOTBALL",
-        "cover": "qatar",
+        "cover": "images/album-images/qatar.png",
         "releaseYear": 2022,
         "totalCards": 12
     },
@@ -71,7 +71,7 @@
         ],
         "finished": false,
         "category": "FOOTBALL",
-        "cover": "south_africa",
+        "cover": "images/album-images/south_africa.png",
         "releaseYear": 2010,
         "totalCards": 6
     },
@@ -97,7 +97,7 @@
         ],
         "finished": false,
         "category": "MOVIES",
-        "cover": "ice_age",
+        "cover": "images/album-images/ice_age.png",
         "releaseYear": 2022,
         "totalCards": 5
     },
@@ -154,7 +154,7 @@
         ],
         "finished": false,
         "category": "VIDEOGAMES",
-        "cover": "sonic",
+        "cover": "images/album-images/sonic.png",
         "releaseYear": 2024,
         "totalCards": 13
     }
