@@ -33,10 +33,17 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponseDto> register(@RequestBody UserRegisterDto dto) {
-        System.out.println("Registering user: " + dto.getEmail());
-        System.out.println("Password: " + dto.getPassword());
-        LoginResponseDto registered = userService.register(dto);
-        return ResponseEntity.ok(registered);
+        try {
+            System.out.println("Registering user: " + dto.getEmail());
+            System.out.println("Full name: " + dto.getFullName());
+            System.out.println("Username: " + dto.getUsername());
+            
+            LoginResponseDto response = userService.register(dto);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            System.err.println("Error processing registration: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
     
     @PostMapping("/login")

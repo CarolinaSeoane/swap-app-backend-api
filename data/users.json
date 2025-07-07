@@ -1,1 +1,217 @@
-[{"id":"7bab2222-61d7-4d84-898c-d94c393f19dc","email":"pedro@gmail.com","fullName":"pedro","username":"pedro","password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS","profileImageUrl":null,"location":"Devoto, Ciudad de Buenos Aires","shipping":true,"reputation":"bad","albums":null,"friends":null},{"id":"f408e3c6-ab6a-483d-9588-126b77f9197c","email":"valeria@gmail.com","fullName":"valeria","username":"valeria","password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS","profileImageUrl":null,"location":"Belgrano, Ciudad de Buenos Aires","shipping":true,"reputation":"good","albums":[{"id":1,"stickers":[{"number":1,"repeatCount":1},{"number":4,"repeatCount":2},{"number":6,"repeatCount":2},{"number":8,"repeatCount":0},{"number":9,"repeatCount":4}]},{"id":2,"stickers":[{"number":3,"repeatCount":2},{"number":6,"repeatCount":2},{"number":8,"repeatCount":1},{"number":10,"repeatCount":0}]}],"friends":["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]},{"id":"f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9","email":"matias@gmail.com","fullName":"matias","username":"matias","password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS","profileImageUrl":"/images/matias.jpg","location":"Nuñez, Ciudad de Buenos Aires","shipping":false,"reputation":"bad","albums":[{"id":1,"stickers":[{"number":2,"repeatCount":2},{"number":4,"repeatCount":1},{"number":5,"repeatCount":1},{"number":8,"repeatCount":2},{"number":10,"repeatCount":0}]},{"id":4,"stickers":[{"number":1,"repeatCount":2},{"number":4,"repeatCount":0},{"number":5,"repeatCount":3},{"number":7,"repeatCount":1},{"number":8,"repeatCount":1},{"number":9,"repeatCount":0}]}],"friends":["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]},{"id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc","email":"marcos@gmail.com","fullName":"Marcos Gomez","username":"marcos","password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS","profileImageUrl":"/images/marcos.jpg","location":"Caballito, Ciudad de Buenos Aires","shipping":true,"reputation":"good","albums":[{"id":1,"stickers":[{"number":1,"repeatCount":2},{"number":2,"repeatCount":0},{"number":3,"repeatCount":1},{"number":5,"repeatCount":4},{"number":6,"repeatCount":2},{"number":9,"repeatCount":6},{"number":10,"repeatCount":0}]},{"id":2,"stickers":[{"number":2,"repeatCount":1},{"number":5,"repeatCount":1},{"number":6,"repeatCount":0},{"number":7,"repeatCount":2},{"number":9,"repeatCount":1},{"number":10,"repeatCount":3}]}],"friends":["f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9","f408e3c6-ab6a-483d-9588-126b77f9197c"]}]
+[
+  {
+    "id":"a0679d3f-7454-47d6-a7eb-54a16e6efcfc",
+    "email":"marcos@gmail.com",
+    "fullName":"Marcos Gomez",
+    "username":"marcos",
+    "password":"$2b$10$aamCP8I7ojDPI1o8a5nHie5auJEAYR5UgkVSz62bK3T9f65FdFRRS",
+    "profileImageUrl":"/images/marcos.jpg",
+    "location": "Caballito, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 2
+          },
+          {
+            "number": 2,
+            "repeatCount": 1
+          },
+          {
+            "number": 3,
+            "repeatCount": 0
+          },
+          {
+            "number": 5,
+            "repeatCount": 4
+          },
+          {
+            "number": 6,
+            "repeatCount": 2
+          },
+          {
+            "number": 9,
+            "repeatCount": 6
+          },
+          {
+            "number": 10,
+            "repeatCount": 0
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "stickers": [
+          {
+            "number": 2,
+            "repeatCount": 1
+          },
+          {
+            "number": 5,
+            "repeatCount": 1
+          },
+          {
+            "number": 6,
+            "repeatCount": 0
+          },
+          {
+            "number": 7,
+            "repeatCount": 2
+          },
+          {
+            "number": 9,
+            "repeatCount": 1
+          },
+          {
+            "number": 10,
+            "repeatCount": 3
+          }
+        ]
+      }
+    ],
+    "friends": ["f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9", "f408e3c6-ab6a-483d-9588-126b77f9197c"]
+  },
+  {
+    "id":"7bab2222-61d7-4d84-898c-d94c393f19dc",
+    "email":"pedro@gmail.com",
+    "fullName":"pedro",
+    "username":"pedro",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "location": "Devoto, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "bad",
+    "profileImageUrl":null
+  },
+  {
+    "id":"f94a6d21-2fd1-4c5b-892a-2c7d70c40dc9",
+    "email":"matias@gmail.com",
+    "fullName":"matias",
+    "username":"matias",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "profileImageUrl":"/images/matias.jpg",
+    "location": "Nuñez, Ciudad de Buenos Aires",
+    "shipping": false,
+    "reputation": "bad",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 2,
+            "repeatCount": 2
+          },
+          {
+            "number": 4,
+            "repeatCount": 1
+          },
+          {
+            "number": 5,
+            "repeatCount": 1
+          },
+          {
+            "number": 8,
+            "repeatCount": 2
+          },
+          {
+            "number": 10,
+            "repeatCount": 0
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 2
+          },
+          {
+            "number": 4,
+            "repeatCount": 0
+          },
+          {
+            "number": 5,
+            "repeatCount": 3
+          },
+          {
+            "number": 7,
+            "repeatCount": 1
+          },
+          {
+            "number": 8,
+            "repeatCount": 1
+          },
+          {
+            "number": 9,
+            "repeatCount": 0
+          }
+        ]
+      }
+    ],
+    "friends":  ["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]
+  },
+  {
+    "id":"f408e3c6-ab6a-483d-9588-126b77f9197c",
+    "email":"valeria@gmail.com",
+    "fullName":"valeria",
+    "username":"valeria",
+    "password":"$2a$10$7PF5pRF9lTcOp.YVKd.HOuRi8XK0HCFFG9IlzLSvV24JJKdebsc.u",
+    "profileImageUrl": null,
+    "location": "Belgrano, Ciudad de Buenos Aires",
+    "shipping": true,
+    "reputation": "good",
+    "albums": [
+      {
+        "id": 1,
+        "stickers": [
+          {
+            "number": 1,
+            "repeatCount": 1
+          },
+          {
+            "number": 4,
+            "repeatCount": 2
+          },
+          {
+            "number": 6,
+            "repeatCount": 2
+          },
+          {
+            "number": 8,
+            "repeatCount": 0
+          },
+          {
+            "number": 9,
+            "repeatCount": 4
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "stickers": [
+          {
+            "number": 3,
+            "repeatCount": 2
+          },
+          {
+            "number": 6,
+            "repeatCount": 2
+          },
+          {
+            "number": 8,
+            "repeatCount": 1
+          },
+          {
+            "number": 10,
+            "repeatCount": 0
+          }
+        ]
+      }
+    ],
+    "friends":  ["a0679d3f-7454-47d6-a7eb-54a16e6efcfc"]
+  }
+]
