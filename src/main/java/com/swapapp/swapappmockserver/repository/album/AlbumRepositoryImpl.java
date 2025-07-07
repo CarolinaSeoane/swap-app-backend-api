@@ -20,13 +20,17 @@ public class AlbumRepositoryImpl implements IAlbumRepository {
     }
 
     private void loadDataBase() throws IOException {
-        File file;
+        File file = new File(ALBUMS_FILE_PATH);
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Album> albums;
 
-        file = new File(ALBUMS_FILE_PATH);
-        albums = objectMapper.readValue(file,new TypeReference<List<Album>>(){});
-        listOfAlbums = albums;
+        if (!file.exists()) {
+            System.err.println("Archivo albums.json no encontrado en: " + file.getAbsolutePath());
+            file.getParentFile().mkdirs(); // Crear directorio data si no existe
+            listOfAlbums = new ArrayList<>(); // Lista vacía por defecto
+        } else {
+            listOfAlbums = objectMapper.readValue(file, new TypeReference<List<Album>>() {});
+            System.out.println("Albums cargados: " + listOfAlbums.size() + " desde " + ALBUMS_FILE_PATH);
+        }
     }
 
     @Override
