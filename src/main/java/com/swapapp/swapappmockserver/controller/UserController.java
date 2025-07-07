@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<LoginResponseDto> register(@RequestBody UserRegisterDto dto) {
         try {
-            System.out.println("Registering user: " + dto.getEmail());
+        System.out.println("Registering user: " + dto.getEmail());
             System.out.println("Full name: " + dto.getFullName());
             System.out.println("Username: " + dto.getUsername());
             

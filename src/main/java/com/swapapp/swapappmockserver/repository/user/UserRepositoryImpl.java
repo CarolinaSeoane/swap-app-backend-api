@@ -38,7 +38,7 @@ public class UserRepositoryImpl implements IUserRepository {
 
         System.out.println("Cargando usuarios desde: " + file.getAbsolutePath());
         System.out.println("Archivo existe: " + file.exists());
-        
+
         if (!file.exists()) {
             // Crear archivo vacío solo si no existe
             System.out.println("Creando archivo de usuarios vacío...");
@@ -49,7 +49,7 @@ public class UserRepositoryImpl implements IUserRepository {
         } else {
             try {
                 System.out.println("Leyendo usuarios del archivo...");
-                users = mapper.readValue(file, new TypeReference<List<User>>() {});
+            users = mapper.readValue(file, new TypeReference<List<User>>() {});
                 if (users == null) {
                     users = new ArrayList<>();
                 }
