@@ -7,7 +7,6 @@ import com.swapapp.swapappmockserver.dto.User.UserDto;
 import com.swapapp.swapappmockserver.dto.User.UserLoginDto;
 import com.swapapp.swapappmockserver.dto.User.UserRegisterDto;
 import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
-import com.swapapp.swapappmockserver.security.JwtUtil;
 import com.swapapp.swapappmockserver.service.user.UserServiceImpl;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.swapapp.swapappmockserver.exceptions.EmailNotFoundException;
 import com.swapapp.swapappmockserver.exceptions.IncorrectPasswordException;
-import com.swapapp.swapappmockserver.repository.user.IUserRepository;
 
 
 @RestController
@@ -29,19 +27,23 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-    @Autowired
-    private IUserRepository userRepository;
-    @Autowired
-    private JwtUtil jwtUtil;
+
     @Autowired
     private AppProperties appProperties;
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponseDto> register(@RequestBody UserRegisterDto dto) {
-        System.out.println("Registering user: " + dto.getEmail());
-        System.out.println("Password: " + dto.getPassword());
-        LoginResponseDto registered = userService.register(dto);
-        return ResponseEntity.ok(registered);
+        try {
+            System.out.println("Registering user: " + dto.getEmail());
+            System.out.println("Full name: " + dto.getFullName());
+            System.out.println("Username: " + dto.getUsername());
+            
+            LoginResponseDto response = userService.register(dto);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            System.err.println("Error processing registration: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
     
     @PostMapping("/login")
@@ -139,6 +141,18 @@ public class UserController {
         } catch (RuntimeException e) {
             System.out.println("Error getting possible trades: " + e);
             return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UserDto> updateCurrentUser(
+            @PathVariable String email
+    ) {
+        try {
+            UserDto user = userService.getUserByEmail(email);
+            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 

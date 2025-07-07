@@ -43,12 +43,12 @@ public class UserServiceImpl implements IUserService {
             dto.getFullName(),
             dto.getUsername(),
             passwordEncoder.encode(dto.getPassword()),
-            dto.getProfileImageUrl(),
-            dto.getLocation(),
-            dto.getShipping(),
-            dto.getReputation(),
-            dto.getAlbums(),
-            dto.getFriends()
+            null,                          // profileImageUrl: null por defecto
+            null,                          // location: null por defecto  
+            null,                          // shipping: null por defecto
+            null,                          // reputation: null por defecto
+            new ArrayList<>(),             // albums: lista vacía por defecto
+            new ArrayList<>()              // friends: lista vacía por defecto
         );
 
         userRepository.save(newUser);
@@ -60,8 +60,8 @@ public class UserServiceImpl implements IUserService {
             newUser.getEmail(),
             newUser.getFullName(),
             newUser.getUsername(),
-            newUser.getAlbums(),
-            newUser.getFriends()
+            newUser.getAlbums(),        // Ya inicializado como lista vacía
+            newUser.getFriends()        // Ya inicializado como lista vacía
         );
     }
 
@@ -83,8 +83,8 @@ public class UserServiceImpl implements IUserService {
             user.getEmail(),
             user.getFullName(),
             user.getUsername(),
-            user.getAlbums(),
-            user.getFriends()
+            user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+            user.getFriends() != null ? user.getFriends() : new ArrayList<>()
         );
     }
 
@@ -100,8 +100,8 @@ public class UserServiceImpl implements IUserService {
                         user.getLocation(),
                         user.getShipping(),
                         user.getReputation(),
-                        user.getAlbums(),
-                        user.getFriends()
+                        user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                        user.getFriends() != null ? user.getFriends() : new ArrayList<>()
                 ))
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
@@ -109,6 +109,23 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserDto getUserById(String id) {
         return userRepository.findById(id)
+                .map(user -> new UserDto(
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getUsername(),
+                        user.getProfileImageUrl(),
+                        user.getLocation(),
+                        user.getShipping(),
+                        user.getReputation(),
+                        user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                        user.getFriends() != null ? user.getFriends() : new ArrayList<>()
+                ))
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Override
+    public UserDto getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
                 .map(user -> new UserDto(
                         user.getEmail(),
                         user.getFullName(),
@@ -249,8 +266,8 @@ public class UserServiceImpl implements IUserService {
                 user.getLocation(),
                 user.getShipping(),
                 user.getReputation(),
-                user.getAlbums(),
-                user.getFriends()
+                user.getAlbums() != null ? user.getAlbums() : new ArrayList<>(),
+                user.getFriends() != null ? user.getFriends() : new ArrayList<>()
         );
     }
 
@@ -265,6 +282,45 @@ public class UserServiceImpl implements IUserService {
 
         user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public UserAlbumDto getUserAlbumById(UserDto user, Integer albumId) {
+        List<UserAlbumDto> myAlbums = user.getAlbums();
+
+        return myAlbums.stream().filter(
+                album -> album.getId().equals(albumId)
+        ).toList().getFirst();
+    }
+
+    public Optional<StickerTrade> getStickerFromUserAlbum(UserAlbumDto album, Integer stickerNumber) {
+        List<StickerTrade> stickers = album.getStickers();
+        return stickers.stream()
+                .filter(sticker -> sticker.getNumber().equals(stickerNumber))
+                .findFirst();
+    }
+
+    @Override
+    public void addStickersToAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+
+            if (sticker.isPresent()) {
+                sticker.get().incrementRepeatCount();
+            } else {
+                StickerTrade newSticker = new StickerTrade(stickerNumber, 0);
+                album.addSticker(newSticker);
+            }
+        });
+    }
+
+    @Override
+    public void removeStickersFromAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+            sticker.ifPresent(StickerTrade::decrementRepeatCount);
+        });
     }
 
 }
