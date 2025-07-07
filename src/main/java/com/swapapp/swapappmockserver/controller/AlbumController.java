@@ -41,13 +41,13 @@ public class AlbumController {
 
     @GetMapping("/category/{email}")
     public ResponseEntity<List<Album>> getUserAlbumsCategory(@PathVariable("email") String email, @RequestParam("categoryId") String categoryId) {
-        logger.info("/albums category ");
+        System.out.println("getUserAlbumsCategory categoryId: " + categoryId);
         return new ResponseEntity<>(albumServiceImpl.getUserAlbumsCategory(categoryId, email), HttpStatus.OK);
     }
 
     @PutMapping("/{albumId}/{email}")
     public ResponseEntity<Album> updateUserCards(@PathVariable String albumId, @PathVariable String email, @RequestBody List<TradingCard> tradingCards) {
-        logger.info("/updateUserCards");
+        System.out.println("updateUserCards albumId: " + albumId);
         return new ResponseEntity<>(albumServiceImpl.updateUserCards(albumId, tradingCards, email), HttpStatus.OK);
     }
 }

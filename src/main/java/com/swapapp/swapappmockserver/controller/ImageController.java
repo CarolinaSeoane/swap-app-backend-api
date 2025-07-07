@@ -26,7 +26,6 @@ public class ImageController {
             @RequestHeader("Authorization") String authHeader,
             @PathVariable String filename
     ) {
-        System.out.println("Llego al controller con token");
 
         try {
             // Validar JWT

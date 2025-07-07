@@ -73,7 +73,7 @@ public class UserController {
         try {
             String token = authHeader.replace("Bearer ", "");
             UserDto user = userService.getCurrentUser(token);
-            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
+            return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(null);
         }
@@ -87,7 +87,7 @@ public class UserController {
         try {
             String token = authHeader.replace("Bearer ", "");
             UserDto user = userService.updateProfile(token, updatedUser);
-            return ResponseEntity.ok(addBaseUrlIfNeeded(user));
+            return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
@@ -101,9 +101,8 @@ public class UserController {
         try {
             String token = authHeader.replace("Bearer ", "");
             String imageUrl = userService.saveProfileImage(token, image);
-            String baseUrl = appProperties.getBaseUrl();
-            String fullUrl = baseUrl + imageUrl;
-            return ResponseEntity.ok().body(Map.of("imageUrl", fullUrl));
+            System.out.println("imageUrl: " + imageUrl);
+            return ResponseEntity.ok().body(Map.of("imageUrl", imageUrl));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", e.getMessage()));
