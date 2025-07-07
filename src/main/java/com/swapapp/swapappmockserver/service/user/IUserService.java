@@ -20,7 +20,10 @@ public interface IUserService {
     UserDto updateProfile(String token, UserDto dto);
     void changePassword(String token, ChangePasswordDto dto);
     UserDto getUserById(String id);
+    UserDto getUserByEmail(String email);
     List<PossibleTrade> findPossibleTrades(UserDto user, UserDto friend);
     List<PossibleTrade> getPossibleTrades(String token);
+    void addStickersToAlbum(UserDto user, List<Integer> sticker, Integer albumId);
+    void removeStickersFromAlbum(UserDto user, List<Integer> sticker, Integer albumId);
 }
 

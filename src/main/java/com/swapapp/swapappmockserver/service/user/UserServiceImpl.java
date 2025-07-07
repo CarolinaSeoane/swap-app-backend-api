@@ -124,6 +124,23 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserDto getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> new UserDto(
+                        user.getEmail(),
+                        user.getFullName(),
+                        user.getUsername(),
+                        user.getProfileImageUrl(),
+                        user.getLocation(),
+                        user.getShipping(),
+                        user.getReputation(),
+                        user.getAlbums(),
+                        user.getFriends()
+                ))
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Override
     public List<PossibleTrade> findPossibleTrades(UserDto user, UserDto friend) {
         List<UserAlbumDto> myAlbums = user.getAlbums();
         List<UserAlbumDto> friendAlbums = friend.getAlbums();
@@ -265,6 +282,45 @@ public class UserServiceImpl implements IUserService {
 
         user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         userRepository.save(user);
+    }
+
+    public UserAlbumDto getUserAlbumById(UserDto user, Integer albumId) {
+        List<UserAlbumDto> myAlbums = user.getAlbums();
+
+        return myAlbums.stream().filter(
+                album -> album.getId().equals(albumId)
+        ).toList().getFirst();
+    }
+
+    public Optional<StickerTrade> getStickerFromUserAlbum(UserAlbumDto album, Integer stickerNumber) {
+        List<StickerTrade> stickers = album.getStickers();
+        return stickers.stream()
+                .filter(sticker -> sticker.getNumber().equals(stickerNumber))
+                .findFirst();
+    }
+
+    @Override
+    public void addStickersToAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+
+            if (sticker.isPresent()) {
+                sticker.get().incrementRepeatCount();
+            } else {
+                StickerTrade newSticker = new StickerTrade(stickerNumber, 0);
+                album.addSticker(newSticker);
+            }
+        });
+    }
+
+    @Override
+    public void removeStickersFromAlbum(UserDto user, List<Integer> stickers, Integer albumId) {
+        UserAlbumDto album = this.getUserAlbumById(user, albumId);
+        stickers.forEach(stickerNumber -> {
+            Optional<StickerTrade> sticker = this.getStickerFromUserAlbum(album, stickerNumber);
+            sticker.ifPresent(StickerTrade::decrementRepeatCount);
+        });
     }
 
 }

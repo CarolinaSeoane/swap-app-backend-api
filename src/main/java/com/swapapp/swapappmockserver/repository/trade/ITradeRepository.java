@@ -5,9 +5,11 @@ import com.swapapp.swapappmockserver.model.trades.PossibleTrade;
 import com.swapapp.swapappmockserver.model.trades.TradeRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ITradeRepository {
     List<PossibleTrade> getAllTradeRequests();
     List<TradeRequest> getAllTradeRequestsByUser(String email);
     void createTradeRequestFromPossibleTrade(PossibleTrade possibleTrade, UserDto from);
+    TradeRequest getTradeRequestById(UUID tradeId);
 }

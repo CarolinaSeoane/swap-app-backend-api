@@ -117,6 +117,7 @@ public class AlbumServiceImpl implements IAlbumService {
             album.getTradingCards().forEach(tradingCard1 -> {
                 if (tradingCard1.getNumber().equals(tradingCard.getNumber())){
                     tradingCard1.setRepeatedQuantity(tradingCard.getRepeatedQuantity());
+                    tradingCard1.setObtained(tradingCard.getObtained());
                 }
             });
         }

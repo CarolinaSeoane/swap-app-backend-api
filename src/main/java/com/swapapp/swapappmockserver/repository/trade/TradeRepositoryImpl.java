@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class TradeRepositoryImpl implements ITradeRepository {
@@ -38,8 +39,16 @@ public class TradeRepositoryImpl implements ITradeRepository {
         System.out.println("FROM que llega del front: " + tradeRequest.getFrom());
         tradeRequest.setTo(tradeRequest.getFrom());
         tradeRequest.setFrom(from);
+        tradeRequest.setId(UUID.randomUUID());
 
         tradeRequests.add(tradeRequest);
+    }
+
+    @Override
+    public TradeRequest getTradeRequestById(UUID tradeId) {
+        return tradeRequests.stream()
+                .filter(t -> t.getId().equals(tradeId))
+                .toList().getFirst();
     }
 
 }
