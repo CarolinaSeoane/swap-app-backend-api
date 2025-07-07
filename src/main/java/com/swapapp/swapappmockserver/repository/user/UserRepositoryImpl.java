@@ -92,7 +92,7 @@ public class UserRepositoryImpl implements IUserRepository {
 
         Optional<UserAlbumDto> userAlbumDto = userAlbumDtos.stream().filter(userAlbumDto1 -> userAlbumDto1.getId().equals(album.getId())).findFirst();
 
-        userAlbumDto.ifPresent(albumDto -> isStickerPresent(albumDto, album));
+        userAlbumDto.ifPresent(albumDto -> updateSticker(albumDto, album));
 
         if(user.isPresent()){
             users.remove(user.get());
@@ -102,19 +102,31 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
 
-    private void updateSticker (StickerTrade sticker, List<TradingCard> tradingCards){
-        Optional<TradingCard> tradingCard = tradingCards.stream().filter(tradingCard1 -> tradingCard1.getNumber().equals(sticker.getNumber())).findFirst();
-        tradingCard.ifPresent(card -> sticker.setRepeatCount(card.getRepeatedQuantity()));
+    private Optional<TradingCard> isStickerPresent(StickerTrade sticker, List<TradingCard> tradingCards){
+        return tradingCards.stream().filter(tradingCard1 -> tradingCard1.getNumber().equals(sticker.getNumber())).findFirst();
     }
 
-    private void isStickerPresent(UserAlbumDto albumDto, Album album){
-        List<TradingCard> tradingCardsToAdd = album.getTradingCards().stream().filter(tradingCard -> tradingCard.getRepeatedQuantity() > 0 && !tradingCard.getObtained()).toList();
-        albumDto.getStickers().forEach(stickerTrade -> updateSticker(stickerTrade, album.getTradingCards()));
+    private void updateSticker(UserAlbumDto albumDto, Album album){
+        List<TradingCard> tradingCardsToAdd = album.getTradingCards().stream().filter(tradingCard -> tradingCard.getRepeatedQuantity() > 0 && !userHasIt(tradingCard, albumDto.getStickers())).toList();
+        albumDto.getStickers().forEach(stickerTrade -> {
+            Optional<TradingCard> tradingCard = isStickerPresent(stickerTrade, album.getTradingCards());
+            tradingCard.ifPresent(card -> stickerTrade.setRepeatCount(card.getRepeatedQuantity()));
+        });
 
-        List<StickerTrade> stickerTrades = tradingCardsToAdd.stream().map(tradingCard -> new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity())).toList();
-
-        for(StickerTrade sticker : stickerTrades){
+        List<StickerTrade> stickerTradesToAdd = tradingCardsToAdd.stream().map(tradingCard -> new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity())).toList();
+        for(StickerTrade sticker : stickerTradesToAdd){
             albumDto.getStickers().add(sticker);
         }
+
+        List<TradingCard> tradingCardsToRemove = album.getTradingCards().stream().filter(tradingCard -> !tradingCard.getObtained() && userHasIt(tradingCard, albumDto.getStickers())).toList();
+        List<StickerTrade> stickerTradesToRemove = tradingCardsToRemove.stream().map(tradingCard -> new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity())).toList();
+
+        for(StickerTrade sticker : stickerTradesToRemove){
+            albumDto.getStickers().remove(sticker);
+        }
+    }
+
+    private Boolean userHasIt(TradingCard tradingCard, List<StickerTrade> userTradingCards){
+        return userTradingCards.stream().anyMatch(sticker -> sticker.getNumber().equals(tradingCard.getNumber()));
     }
 }
