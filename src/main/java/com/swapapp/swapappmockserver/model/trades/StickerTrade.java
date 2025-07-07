@@ -10,4 +10,13 @@ import lombok.NoArgsConstructor;
 public class StickerTrade {
     private Integer number;
     private Integer repeatCount;
+
+    public void incrementRepeatCount() {
+        repeatCount ++;
+    }
+
+    public void decrementRepeatCount() {
+        repeatCount --;
+    }
+
 }

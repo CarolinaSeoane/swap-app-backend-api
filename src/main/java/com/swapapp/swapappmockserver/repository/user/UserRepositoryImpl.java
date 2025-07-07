@@ -2,7 +2,6 @@ package com.swapapp.swapappmockserver.repository.user;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.swapapp.swapappmockserver.dto.Album.AlbumDto;
 import com.swapapp.swapappmockserver.dto.User.UserAlbumDto;
 import com.swapapp.swapappmockserver.model.Album;
 import com.swapapp.swapappmockserver.model.User;
