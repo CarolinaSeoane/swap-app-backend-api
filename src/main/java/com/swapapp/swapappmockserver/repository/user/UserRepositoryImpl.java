@@ -131,15 +131,18 @@ public class UserRepositoryImpl implements IUserRepository {
     }
 
     private void updateSticker(UserAlbumDto albumDto, Album album){
-        List<TradingCard> tradingCardsToAdd = album.getTradingCards().stream().filter(tradingCard -> tradingCard.getRepeatedQuantity() > 0 && !userHasIt(tradingCard, albumDto.getStickers())).toList();
+        List<TradingCard> tradingCardsToAdd = album.getTradingCards().stream().filter(tradingCard -> tradingCard.getRepeatedQuantity() > 0 || (!userHasIt(tradingCard, albumDto.getStickers()) && tradingCard.getObtained())).toList();
         albumDto.getStickers().forEach(stickerTrade -> {
             Optional<TradingCard> tradingCard = isStickerPresent(stickerTrade, album.getTradingCards());
             tradingCard.ifPresent(card -> stickerTrade.setRepeatCount(card.getRepeatedQuantity()));
         });
 
-        List<StickerTrade> stickerTradesToAdd = tradingCardsToAdd.stream().map(tradingCard -> new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity())).toList();
+        List<StickerTrade> stickerTradesToAdd = tradingCardsToAdd.stream().map(tradingCard -> !userHasIt(tradingCard, albumDto.getStickers())? new StickerTrade(tradingCard.getNumber(), tradingCard.getRepeatedQuantity()) : null).toList();
         for(StickerTrade sticker : stickerTradesToAdd){
-            albumDto.getStickers().add(sticker);
+            if(sticker != null){
+                albumDto.getStickers().add(sticker);
+            }
+
         }
 
         List<TradingCard> tradingCardsToRemove = album.getTradingCards().stream().filter(tradingCard -> !tradingCard.getObtained() && userHasIt(tradingCard, albumDto.getStickers())).toList();
